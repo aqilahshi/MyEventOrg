@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import VendorPage from './navbarpart/VendorPage';
-import CommitteePage from './navbarpart/CommitteePage';
-import LecturersPage from './navbarpart/LecturersPage';
-import ParticipantsPage from './navbarpart/ParticipantsPage';
-import AdminPage from './navbarpart/AdminPage';
-import HomePage from './navbarpart/HomePage';
+import VendorPage from './component/login/VendorPage';
+import CommitteePage from './component/login/CommitteePage';
+import LecturersPage from './component/login/LecturersPage';
+import ParticipantsPage from './component/login/ParticipantsPage';
+import AdminPage from './component/login/AdminPage';
+import HomePage from './component/login/HomePage';
+import LoginPage from './component/login/LogIn';
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -26,14 +27,21 @@ function App() {
     }
   };
 
+  const handleRoleSelection = (role) => {
+    // Handle the role selection logic
+    console.log('Selected role:', role);
+  };
+
   return (
     <Router>
       <Routes>
         <Route
           path="/"
-          element={
-            <HomePage handleLogin={handleLogin} />
-          }
+          element={<HomePage handleLogin={handleRoleSelection} />}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage handleRoleSelection={handleRoleSelection} />}
         />
         <Route
           path="/vendor"
@@ -91,5 +99,3 @@ function App() {
 }
 
 export default App;
-
-

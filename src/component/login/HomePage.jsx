@@ -1,12 +1,11 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
 
-const HomePage = () => {
-  const handleLogin = (role) => {
-    // Handle login logic here, such as redirecting to the appropriate page based on the role
-    // You can use React Router or any other method for navigation
-    console.log(`Logging in as ${role}`);
+const HomePage = ({ handleLogin }) => {
+  const handleRoleSelection = (role) => {
+    handleLogin(role);
   };
+
 
   return (
     <div
@@ -31,37 +30,39 @@ const HomePage = () => {
         <h1 style={{ color: 'black', marginBottom: '50px' }}>Welcome to MyEventOrg Application!</h1>
         <h1 style={{ color: 'black', marginBottom: '30px' }}>Log In as</h1>
         <Container>
+          <Nav.Link href='/login'>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3 mt-5">
-              <Button variant="primary" block onClick={() => handleLogin('participant')}>
+              <Button variant="primary" block onClick={() => handleRoleSelection('participant')}>
                 Participant
               </Button>
             </Col>
           </Row>
+          </Nav.Link>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <Button variant="primary" block onClick={() => handleLogin('committee')}>
+              <Button variant="primary" block onClick={() => handleRoleSelection('committee')}>
                 Committee
               </Button>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <Button variant="primary" block onClick={() => handleLogin('vendors')}>
+              <Button variant="primary" block onClick={() => handleRoleSelection('vendors')}>
                 Vendors
               </Button>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <Button variant="primary" block onClick={() => handleLogin('lecturers')}>
+              <Button variant="primary" block onClick={() => handleRoleSelection('lecturers')}>
                 Lecturers
               </Button>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <Button variant="primary" block onClick={() => handleLogin('admin')}>
+              <Button variant="primary" block onClick={() => handleRoleSelection('admin')}>
                 Admin
               </Button>
             </Col>
