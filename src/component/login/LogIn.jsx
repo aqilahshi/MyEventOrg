@@ -1,64 +1,40 @@
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
-// import { useHistory } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
 
-  const LoginPage = ({ handleRoleSelection }) => {
-    
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
 
-    const handleLogin = (e) => {
-      e.preventDefault();
-      // Rest of the login logic
-      console.log('Username:', username);
-      console.log('Password:', password);
-      console.log('handleRoleSelection', handleRoleSelection);
+function LoginPage() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const role = searchParams.get('role');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   
-      // Reset the form
-      // setUsername('');
-      // setPassword('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle sign-in logic here, e.g., make an API request
 
-      // Perform user authentication with your backend server
-    // Replace this with your actual authentication logic
-    if (username === 'admin' && password === 'admin' && role === 'admin') {
-      // Successful login for admin
-      localStorage.setItem('userRole', 'admin');
-      
-    } else if (
-      username === 'participant' &&
-      password === 'participant' &&
-      role === 'participant'
-    ) {
-      // Successful login for participant
-      localStorage.setItem('userRole', 'participant');
-      
-    } else if (
-      username === 'vendor' &&
-      password === 'vendor' &&
-      role === 'vendor'
-    ) {
-      // Successful login for vendor
-      localStorage.setItem('userRole', 'vendor');
-     
-    } else {
-      // Failed login
-      alert('Invalid credentials');
-    }
+    console.log('Sign-in details:', { role, email, password });
+    // Reset form fields
+    setEmail('');
+    setPassword('');
+  };
 
-    };
-  
-return (
-    <Container>
-      <h1>Login</h1>
-      <Form onSubmit={handleLogin}>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
+
+  // return <div>Welcome, {role}!</div>;
+
+  return (
+    <div className="login-form-container">
+      
+      <div className="welcome-message">You sign in as: {role}!
+      <p>We will collect your name later!!!!</p></div>
+      
+      <Form onSubmit={handleSubmit} className="login-form">
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
 
@@ -66,19 +42,18 @@ return (
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Enter password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Login
+        <Button variant="primary" type="submit" className="submit-button">
+          Sign In
         </Button>
       </Form>
-    </Container>
+    </div>
   );
-
-};
+}
 
 export default LoginPage;
