@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+<<<<<<< Updated upstream
 
+=======
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+>>>>>>> Stashed changes
 
 function LoginPage() {
   const searchParams = new URLSearchParams(window.location.search);
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+<<<<<<< Updated upstream
   
   const handleSubmit = (e) => {
+=======
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+>>>>>>> Stashed changes
     e.preventDefault();
     // Handle sign-in logic here, e.g., make an API request
 
