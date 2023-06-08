@@ -8,7 +8,8 @@ import {db} from "../../firebase";
 import {collection, addDoc} from "firebase/firestore";
 
 function Attendance() {
-
+  const searchParams = new URLSearchParams(window.location.search);
+  const email1 = searchParams.get('email');
   const usersCollectionRef = collection( db , "Participant")
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -23,9 +24,10 @@ function Attendance() {
   }
 
   return (
-    <div className='attendance'>
-        <blockquote class="blockquote text-center">
-            <h1 class="mb=0">Welcome to MyEventOrg</h1>
+    <div className='container attendance p-3'>
+        <blockquote className="mt-5 blockquote text-center">
+        <p>Email: {email1}</p>
+            <h1 className="mt-5 mb=0">Welcome to MyEventOrg</h1>
             <footer>Please enter below details for your attendance record.</footer>
         </blockquote>
         <Form>
@@ -148,72 +150,3 @@ function Attendance() {
 }
 
 export default Attendance;
-
-
-// import { useEffect, useState } from 'react';
-// // import './c.css'
-// import data from './data';
-// import { shuffle } from 'lodash';
-// // import { useTransition, animated } from 'react-spring';
-// import Replay from './replay.svg';
-
-// function LuckyDrawAlgo(){
-//     const [names, setNames] = useState(data);
-//     const [initialLoad, setInitialLoad] = useState(false);
-//     //to return one name value only when we pressed button
-//     function startRaffle(){
-//         if(names.length <=1 ){
-//             return
-//         }
-//         const randomIndex = Math.floor(Math.random() * names.length);
-//         const filterOutNames = names.filter((name) => name != names[randomIndex]);
-//         setNames(filterOutNames)
-//         setInitialLoad(true);
-//     }
-
-    
-//     useEffect(() => {
-//         if(initialLoad){
-//             //set time for the name to be remove 1 by 1
-//             const filteringTimer = setTimeout(() => 
-//             {startRaffle()}, 100);
-//             return() => clearTimeout(filteringTimer);
-//         }
-//     }, 
-//     //dependency to start raffle
-//     [names, startRaffle, initialLoad]);
-
-//     function restartRaffle() {
-//         setInitialLoad(false);
-//         setNames(data);
-//         // setWraffling(false);
-//         // setShowConfetti(false);
-//       }
-
-//     return(
-//         <div className='App'>
-//             <button onClick={startRaffle} style={{marginRight:'30px'}}>
-//                 Start 
-//             </button>
-//             <button onClick={() => setNames(shuffle(names))}>
-//                 Shuffle
-//             </button>
-//                 {names.map((names, index) => (
-//                     <div key={index}>
-//                         <ul>
-//                             <li>{names.name}</li>
-//                         </ul> 
-//                     </div>
-//                 ))}
-//                 <div className="raffle-ends">
-//                     <h3>Congratulations! You have won!</h3>
-//                     <button className="button-outline" onClick={restartRaffle}>
-//                     <img src={Replay} alt="heading logo" />
-//                     Replay
-//                     </button>
-//                 </div>
-//         </div>
-//     );
-// }
-
-// export default LuckyDrawAlgo;

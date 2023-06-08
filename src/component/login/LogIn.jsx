@@ -11,7 +11,9 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-  
+  // !! const { currentUser } = auth;
+  const email1 = searchParams.get('email');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle sign-in logic here, e.g., make an API request
@@ -20,11 +22,12 @@ function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate(`/${role}`)
+      navigate(`/${role}?email=${email}`);
     } catch (err) {
       setErr(true);
     }
-
+    
+    // !! navigate.push(`/${role}`, { email: currentUser.email });
     // console.log('Sign-in details:', { role, email, password });
     // // Reset form fields
     // setEmail('');
