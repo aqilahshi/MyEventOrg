@@ -101,7 +101,7 @@ const HomePage = () => {
         <Container>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3 mt-5">
-              <Link to='/login?role=participant'><Button variant="primary" >
+              <Link to='/login?role=participants'><Button variant="primary" >
                 Participant
               </Button></Link>
             </Col>

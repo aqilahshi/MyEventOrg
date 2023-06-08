@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import VendorPage from './component/login/VendorPage';
 import CommitteePage from './component/login/CommitteePage';
 import LecturersPage from './component/login/LecturersPage';
-import ParticipantsPage from './component/login/ParticipantsPage';
+import ParticipantsPage from './component/participant/Attendance';
 import AdminPage from './component/login/AdminPage';
 import HomePage from './component/login/HomePage';
 import LoginPage from './component/login/LogIn';
 import './component/login/loginstyle.css';
+import Attendance from './component/participant/Attendance';
 
 function App() {
   // const [userRole, setUserRole] = useState(null);
@@ -120,12 +121,15 @@ function App() {
           path="/lecturers" element={<LecturersPage/>}
         />
         <Route
-          path="/participants" element={<ParticipantsPage/>}
+          path="/participants" element={<Attendance/>}
         />
         <Route
           path="/admin" element={<AdminPage/>}
         />
+          {/* Route Participants */}
+          <Route path="/attendance" element={<Attendance/>}/>
       </Routes>
+      
     </Router>
   );
 }
