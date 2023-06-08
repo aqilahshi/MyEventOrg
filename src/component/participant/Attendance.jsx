@@ -12,7 +12,6 @@ function Attendance() {
   const email1 = searchParams.get('email');
   const usersCollectionRef = collection( db , "Participant")
   const [newName, setNewName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
   const [newMatNo, setNewMatNo] = useState(0);
   const [newPhone, setPhone] = useState(0);
   const [newStudy, setStudy] = useState(0);
@@ -20,7 +19,8 @@ function Attendance() {
 
 
   const createUser = async () => {
-    await addDoc(usersCollectionRef, {username: newName, email: newEmail, matricno: newMatNo, phoneno: newPhone, yearstudy:newStudy, school: newSchool});
+    await addDoc(usersCollectionRef, {username: newName, email: email1, matricno: newMatNo, phoneno: newPhone, yearstudy:newStudy, school: newSchool});
+
   }
 
   return (
@@ -51,18 +51,19 @@ function Attendance() {
             Please insert a proper username.
             </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="Enter email" 
-              onChange={(event) => { 
-                setNewEmail(event.target.value);
-              }}
-            />
-            <Form.Text className="text-muted">
+
+        <Form.Group className='mb-3' controlId='formBasicEmail'>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type='email'
+            placeholder='Your email'
+            className='bg-secondary text-white'
+            value={email1 || ''}
+            readOnly
+          />
+          <Form.Text className='text-muted'>
             We'll never share your email with anyone else.
-            </Form.Text>
+          </Form.Text>        
         </Form.Group>
         <Form.Group className="mb-3">
             <Form.Label>Matric number</Form.Label>
@@ -131,6 +132,42 @@ function Attendance() {
               }}
             >
                 <option>--Select School--</option>
+
+                <option value="School of Housing, Building and Planning">School of Housing, Building and Planning</option>
+                <option value="School of Industrial Technology">School of Industrial Technology</option>
+                <option value="School of Pharmaceutical Sciences">School of Pharmaceutical Sciences</option>
+                <option value="School of Computer Sciences">School of Computer Sciences</option>
+
+                <option value="School of Educational Studies">School of Educational Studies</option>
+                <option value="School of Management">School of Management</option>
+                <option value="Graduate School of Business">Graduate School of Business (GSB)</option>
+                <option value="School of Communication">School of Communication</option>
+                <option value="School of the Art">School of the Art</option>
+
+                <option value="School of Languages, Literacies and Translation">School of Languages, Literacies and Translation</option>
+                <option value="School of Humanities">School of Humanities</option>
+                <option value="School of Social Sciences">School of Social Sciences</option>
+
+                <option value="School of Biological Sciences">School of Biological Sciences</option>
+                <option value="School of Chemical Sciences">School of Chemical Sciences</option>
+                <option value="School of Mathematical Sciences">School of Mathematical Sciences</option>
+                <option value="School of Physics">School of Physics</option>
+
+                <option value="School of Distance Education">School of Distance Education</option>
+                <option value="Institute of Postgraduate Studies">Institute of Postgraduate Studies</option>
+                <option value="Centre for Development of Academic Excellence &amp; Student Development (CDAE)">Centre for Development of Academic Excellence &amp; Student Development (CDAE)</option>
+
+                <option value="School of Electrical and Electronic Engineering">School of Electrical and Electronic Engineering</option>
+                <option value="School of Materials and Mineral Resources Engineering">School of Materials and Mineral Resources Engineering</option>
+                <option value="School of Aerospace Engineering">School of Aerospace Engineering</option>
+                <option value="School of Chemical Engineering">School of Chemical Engineering</option>
+                <option value="School of Civil Engineering">School of Civil Engineering</option>
+                <option value="School of Mechanical Engineering">School of Mechanical Engineering</option>
+
+                <option value="School of Health Sciences">School of Health Sciences</option>
+                <option value="School of Medical Sciences">School of Medical Sciences</option>
+                <option value="School of Dental Sciences">School of Dental Sciences</option>
+
                 <option value="School of Computer Science">School of Computer Science</option>
                 <option value="School of Chemical Science">School of Chemical Science</option>
                 <option value="School of Mathematics">School of Mathematics</option>
@@ -138,6 +175,7 @@ function Attendance() {
                 <option value="School of Physics">School of Physics</option>
                 <option value="School of Language and Literature">School of Language and Literature</option>
                 <option value="School of Art">School of Art</option>
+
             </Form.Select>
         </Form.Group>
         <p></p>

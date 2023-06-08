@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -9,12 +13,22 @@ function LoginPage() {
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const handleSubmit = (e) => {
+
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+
+
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
   // !! const { currentUser } = auth;
   const email1 = searchParams.get('email');
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     // Handle sign-in logic here, e.g., make an API request
     const email = e.target[0].value;
