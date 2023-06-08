@@ -20,6 +20,7 @@ function Attendance() {
 
   const createUser = async () => {
     await addDoc(usersCollectionRef, {username: newName, email: email1, matricno: newMatNo, phoneno: newPhone, yearstudy:newStudy, school: newSchool});
+
   }
 
   return (
@@ -50,6 +51,7 @@ function Attendance() {
             Please insert a proper username.
             </Form.Text>
         </Form.Group>
+
         <Form.Group className='mb-3' controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -61,7 +63,7 @@ function Attendance() {
           />
           <Form.Text className='text-muted'>
             We'll never share your email with anyone else.
-          </Form.Text>
+          </Form.Text>        
         </Form.Group>
         <Form.Group className="mb-3">
             <Form.Label>Matric number</Form.Label>
@@ -130,6 +132,7 @@ function Attendance() {
               }}
             >
                 <option>--Select School--</option>
+
                 <option value="School of Housing, Building and Planning">School of Housing, Building and Planning</option>
                 <option value="School of Industrial Technology">School of Industrial Technology</option>
                 <option value="School of Pharmaceutical Sciences">School of Pharmaceutical Sciences</option>
@@ -164,6 +167,15 @@ function Attendance() {
                 <option value="School of Health Sciences">School of Health Sciences</option>
                 <option value="School of Medical Sciences">School of Medical Sciences</option>
                 <option value="School of Dental Sciences">School of Dental Sciences</option>
+
+                <option value="School of Computer Science">School of Computer Science</option>
+                <option value="School of Chemical Science">School of Chemical Science</option>
+                <option value="School of Mathematics">School of Mathematics</option>
+                <option value="School of Pharmacy">School of Pharmacy</option>
+                <option value="School of Physics">School of Physics</option>
+                <option value="School of Language and Literature">School of Language and Literature</option>
+                <option value="School of Art">School of Art</option>
+
             </Form.Select>
         </Form.Group>
         <p></p>
