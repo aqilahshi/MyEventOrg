@@ -13,17 +13,9 @@ function LoginPage() {
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  const handleSubmit = (e) => {
-
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-
-
-  const [err, setErr] = useState(false);
-  const navigate = useNavigate();
   // !! const { currentUser } = auth;
   const email1 = searchParams.get('email');
 
@@ -49,8 +41,6 @@ function LoginPage() {
 
     
   };
-
-
   // return <div>Welcome, {role}!</div>;
 
   return (
