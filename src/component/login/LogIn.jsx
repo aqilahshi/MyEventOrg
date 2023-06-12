@@ -4,29 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
-import { useNavigate, Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
-
 function LoginPage() {
   const searchParams = new URLSearchParams(window.location.search);
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const handleSubmit = (e) => {
-
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-
-
-  const [err, setErr] = useState(false);
-  const navigate = useNavigate();
-  // !! const { currentUser } = auth;
-  const email1 = searchParams.get('email');
-
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -39,20 +24,9 @@ function LoginPage() {
       navigate(`/${role}?email=${email}`);
     } catch (err) {
       setErr(true);
-    }
-    
-    // !! navigate.push(`/${role}`, { email: currentUser.email });
-    // console.log('Sign-in details:', { role, email, password });
-    // // Reset form fields
-    // setEmail('');
-    // setPassword('');
-
-    
+    }   
   };
-
-
-  // return <div>Welcome, {role}!</div>;
-
+      
   return (
     <div className="login-form-container">
       
