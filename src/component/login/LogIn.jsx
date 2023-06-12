@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
-function LoginPage() {
+
+function LoginPage(){
+
   const searchParams = new URLSearchParams(window.location.search);
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const email1 = searchParams.get('email');
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -24,9 +27,7 @@ function LoginPage() {
       navigate(`/${role}?email=${email}`);
     } catch (err) {
       setErr(true);
-    }   
-  };
-      
+
   return (
     <div className="login-form-container">
       
@@ -60,6 +61,6 @@ function LoginPage() {
       </Form>
     </div>
   );
-}
+  }
 
 export default LoginPage;
