@@ -13,8 +13,6 @@ function LoginPage(){
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-
-  // !! const { currentUser } = auth;
   const email1 = searchParams.get('email');
 
   const handleSubmit = async (e) => {
@@ -29,15 +27,6 @@ function LoginPage(){
       navigate(`/${role}?email=${email}`);
     } catch (err) {
       setErr(true);
-    }
-    
-    // !! navigate.push(`/${role}`, { email: currentUser.email });
-    // console.log('Sign-in details:', { role, email, password });
-    // // Reset form fields
-    // setEmail('');
-    // setPassword('');
-    
-  };
 
   return (
     <div className="login-form-container">

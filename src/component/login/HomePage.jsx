@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("./images/USM.jpg")`,
+        backgroundImage: `url("./images/login/images.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '90vh',

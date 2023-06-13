@@ -3,25 +3,40 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import {db} from "../../firebase";
-//establish connection to specific collection
-import {collection, addDoc} from "firebase/firestore";
+import { db } from "../../firebase";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { Link } from 'react-router-dom';
 
 function Attendance() {
   const searchParams = new URLSearchParams(window.location.search);
   const email1 = searchParams.get('email');
-  const usersCollectionRef = collection( db , "Participant")
+  const usersCollectionRef = collection(db, "Participant");
   const [newName, setNewName] = useState("");
   const [newMatNo, setNewMatNo] = useState(0);
   const [newPhone, setPhone] = useState(0);
   const [newStudy, setStudy] = useState(0);
   const [newSchool, setSchool] = useState("");
 
-
   const createUser = async () => {
-    await addDoc(usersCollectionRef, {username: newName, email: email1, matricno: newMatNo, phoneno: newPhone, yearstudy:newStudy, school: newSchool});
+    // Check if the user already exists in the database
+    const usersQuery = query(usersCollectionRef, where("email", "==", email1));
+    const querySnapshot = await getDocs(usersQuery);
 
-  }
+    if (querySnapshot.empty) {
+      // User does not exist, proceed with adding the data
+      await addDoc(usersCollectionRef, {
+        username: newName,
+        email: email1,
+        matricno: newMatNo,
+        phoneno: newPhone,
+        yearstudy: newStudy,
+        school: newSchool
+      });
+    } else {
+      // User already exists, handle accordingly (e.g., display an error message)
+      console.log("User already exists in the database");
+    }
+  };
 
   return (
     <div className='container attendance p-3'>
@@ -179,9 +194,11 @@ function Attendance() {
             </Form.Select>
         </Form.Group>
         <p></p>
+        <Link to = '/participantpage'>
         <Button variant="primary" type="submit" onClick={createUser}> 
             Submit
         </Button>
+        </Link>
         </Form>
     </div>
   );

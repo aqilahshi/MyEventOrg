@@ -8,6 +8,7 @@ import HomePage from './component/login/HomePage';
 import LoginPage from './component/login/LogIn';
 import './component/login/loginstyle.css';
 import Attendance from './component/participant/Attendance';
+import ParticipantPage from './component/participant/ParticipantPage';
 
 function App() {
   return (
@@ -34,8 +35,10 @@ function App() {
         <Route
           path="/admin" element={<AdminPage/>}
         />
+
           {/* Route Participants */}
-          <Route path="/iii" element={<Attendance/>}/>
+          <Route path="/participantpage" element={<ParticipantPage/>}/>
+      
           {/* Route Committee Both Lecturer n Committee*/} 
             {/* Route Lecturer */}
             {/* Route Student */}
