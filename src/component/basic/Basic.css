@@ -1,0 +1,48 @@
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .left-side {
+    font-size: 20px;
+  }
+  
+  .right-side {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .content-sidebar-wrapper {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    padding: 20px 0;
+    background-color: #040C18;
+    color: #fff;
+  }
+  
+  .sidebar-icon {
+    margin-bottom: 70px;
+    transition: background-color 0.3s ease; /* Add transition for smooth effect */
+    border-radius: 50%; /* Make the icons round */
+    padding: 10px; /* Adjust the padding as needed */
+    
+  }
+  
+  .sidebar-icon:hover {
+    color: #a6a6a6; /* Change the color on hover */
+  }
+  
+  
+  
