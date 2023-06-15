@@ -1,14 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import vendorpage from './component/login/VendorPage';
-import committeepage from './component/login/CommitteePage';
-import lecturerspage from './component/login/LecturersPage';
-import participantspage from './component/login/ParticipantsPage';
-import adminpage from './component/login/AdminPage';
+import VendorPage from './component/login/VendorPage';
+import CommitteePage from './component/login/CommitteePage';
+import LecturersPage from './component/login/LecturersPage';
+import AdminPage from './component/login/AdminPage';
 import HomePage from './component/login/HomePage';
 import LoginPage from './component/login/LogIn';
 import './component/login/loginstyle.css';
-import { matchPath } from 'react-router';
+import Attendance from './component/participant/Attendance';
+import ParticipantPage from './component/participant/ParticipantPage';
+
 
 
 
@@ -36,10 +37,9 @@ import Testing from "./pages/admin/testing";
 
 import { Navbar, Image } from 'react-bootstrap';
 import navbarlogoImage from './logo.png'; // Import your logo image file
-
-
 // end kirah import
 
+// start kirah part
 // Separate component for the top navbar
 const TopNavbar = () => {
   // Get the current location/route
@@ -105,6 +105,7 @@ const TopNavbar = () => {
       )
   );
 };
+// start kirah part
 
 const App = () => {
   return (
@@ -113,13 +114,37 @@ const App = () => {
       <TopNavbar />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/vendor" element={<vendorpage />} />
-        <Route path="/committee" element={<committeepage />} />
-        <Route path="/lecturers" element={<lecturerspage />} />
-        <Route path="/participants" element={<participantspage />} />
-        <Route path="/admin" element={<adminpage />} />
+
+        <Route
+          path="/" element={<HomePage/>}
+        />
+        <Route
+          path="/login" element={<LoginPage/>}
+        />
+        <Route
+          path="/vendor" element={<VendorPage/>}
+        />
+        <Route
+          path="/committee" element={<CommitteePage/>}
+        />
+        <Route
+          path="/lecturers" element={<LecturersPage/>}
+        />
+        <Route
+          path="/participants" element={<Attendance/>}
+        />
+        <Route
+          path="/admin" element={<AdminPage/>}
+        />
+            
+        {/* Route Participants */}
+          <Route path="/participantpage" element={<ParticipantPage/>}/>
+            
+        {/* Route Committee Both Lecturer n Committee*/} 
+            {/* Route Lecturer */}
+            {/* Route Student */}
+          {/* Route Admin */}
+          {/* Route Vendor */}
 
 
         {/* <Route path="/admindashboard" element={<AdminDashboard />} /> */}
@@ -138,7 +163,9 @@ const App = () => {
         <Route path="/orders" element={<VendorSidebar><Orders /></VendorSidebar>} />
         <Route path="/newcategory" element={<VendorSidebar><NewCategory /></VendorSidebar>} />
         <Route path="/editattribute/:id/:name" element={<VendorSidebar><EditAttribute /></VendorSidebar>} />
+
       </Routes>
+      
     </Router>
   );
 };
