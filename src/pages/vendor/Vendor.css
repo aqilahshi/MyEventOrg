@@ -77,15 +77,11 @@
 
 
     .vendornavbar {
-      background-color: white;
-
+      /* background-color: white; */
+      background-color: #F6F6F7;
+      /* height: 60px; */
     }
 
-    .vendorpage {
-      margin: 60px 20px 0px 20px;
-      
-      /* background-color: #e6a6a6; */
-    }
 
 
     .bullet-list {
@@ -99,3 +95,112 @@
       margin-right: 0.5em;
       color: blue; /* Replace with your desired color */
     }
+
+
+
+    /* .category-list, .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    } */
+    
+    /* .card {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #f5f5f5;
+    } */
+    
+    /* Optional: Adjust card styling for different screen sizes
+    @media (min-width: 576px) {
+      .card {
+        width: calc(50% - 10px);
+      }
+    } */
+    
+    /* @media (min-width: 992px) {
+      .card {
+        width: calc(33.33% - 10px);
+      }
+    } */
+    
+    
+    /* .card-title {
+      margin-bottom: 10px;
+    } */
+    
+    .checkbox-label {
+      font-weight: bold;
+    }
+    
+    .checkbox-select-all {
+      margin-bottom: 10px;
+    }
+    
+    .add-category-button, .add-product-button {
+      margin-bottom: 10px;
+    }
+
+
+    .status-toggle-button {
+      width: 60px;
+      height: 30px;
+      padding: 0;
+      border-radius: 15px;
+      position: relative;
+      background-color: grey;
+      border: none;
+      overflow: hidden;
+    }
+    
+    .status-toggle-button.active {
+      background-color: green;
+    }
+    
+    .slider {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .status-toggle-button.active .slider {
+      transform: translateX(30px);
+    }
+    
+
+
+
+
+
+
+    .vendorpage {
+      margin: 60px 20px 0px 20px;
+      /* width: 100%; */
+      /* overflow-x: auto; */
+       /* background-color: #e6a6a6;  */
+    } 
+
+    .custom-div {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+    }
+    
+    .dropzone {
+      border: 2px dashed #ccc;
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+    }
+
+
+h7{
+  font-size: 16px;
+  font-weight: bold;
+}

@@ -1,0 +1,31 @@
+:root {
+    --primary-color: #007bff;
+    --background-color: #ffffff;
+    --font-color: #000000;
+    --line-color: rgb(75, 192, 192);
+  }
+  
+  h4 {
+    color: var(--primary-color);
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--font-color);
+  }
+  
+  .chart-line {
+    border-color: var(--line-color);
+  }
+
+  .card {
+    width: 100%;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    padding: 0px;
+    /* background-color: #282525; */
+    margin: 14px 0px 0px 0px;
+  }
+
+
+  

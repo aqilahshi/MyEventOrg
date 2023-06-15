@@ -47,7 +47,7 @@ const CreatePost = () => {
 
   const fetchPost = async () => {
 
-    await getDocs(collection(db, "product"))
+    await getDocs(collection(db, "Product"))
       .then((querySnapshot) => {
         const newData = querySnapshot.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -281,14 +281,14 @@ const CreatePost = () => {
           )}
         </div>
       </div>
-      <h2>Products</h2>
+      {/* <h2>Products</h2>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
             <Link to={`/product/${todo.id}`}>{todo.productname}</Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

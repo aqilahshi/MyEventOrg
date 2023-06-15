@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { db } from '../../firebase';
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Link } from 'react-router-dom';
-import VendorSidebar from '../../component/vendor/Sidebar';
+// import VendorSidebar from '../../component/vendor/Sidebar';
 
 
 import "./Vendor.css"; // Import custom CSS file for additional styling

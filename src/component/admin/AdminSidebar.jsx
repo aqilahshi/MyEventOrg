@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 import { FaHome, FaBoxOpen, FaPaperclip, FaHashtag, FaTag, FaBox, FaUsers } from "react-icons/fa";
-import "../../pages/vendor/Vendor.css";
-// import VendorDashboard from "../../pages/vendor/VendorDashboard";
+import "../../pages/admin/Admin.css";
 
 
-const Sidebar = ({ children }) => {
+const AdminSidebar = ({ children }) => {
   const menuItems = [
     {
       category: 'QUICK LINKS',
       items: [
-        { label: 'Dashboard', link: '/vendordashboard', icon: <FaHome /> },
-        { label: 'New Product', link: '/newproduct', icon: <FaBoxOpen /> }
+        { label: 'Dashboard', link: '/admindashboard', icon: <FaHome /> },
       ]
     },
     {
-      category: 'CATALOG',
+      category: 'ADMIN',
       items: [
-        { label: 'Products', link: '/products', icon: <FaBoxOpen /> },
-        { label: 'Categories', link: '/categories', icon: <FaPaperclip /> },
-        { label: 'Collections', link: '/collections', icon: <FaTag /> },
-        { label: 'Attributes', link: '/attributes', icon: <FaHashtag /> }
+        { label: 'Manage Admin', link: '/manageadmin', icon: <FaBoxOpen /> },
       ]
     },
     {
-      category: 'SALE',
+      category: 'VENDOR',
       items: [
-        { label: 'Orders', link: '/orders', icon: <FaBox /> }
+        { label: 'Verify Vendor', link: '/verifyvendor', icon: <FaHashtag /> },
+        { label: 'Manage Vendor', link: '/managevendor', icon: <FaPaperclip /> },
       ]
     },
     {
-      category: 'CUSTOMER',
+      category: '',
       items: [
-        { label: 'Customers', link: '/customers', icon: <FaUsers /> }
+        { label: 'Setting', link: '/adminsetting', icon: <FaUsers /> }
       ]
     }
     // Add more categories and menu items as needed
@@ -63,4 +59,4 @@ const Sidebar = ({ children }) => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;
