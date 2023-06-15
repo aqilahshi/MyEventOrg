@@ -13,7 +13,6 @@ function LoginPage(){
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-  const email1 = searchParams.get('email');
 
   const handleSubmit = async (e) => {
 
@@ -27,6 +26,8 @@ function LoginPage(){
       navigate(`/${role}?email=${email}`);
     } catch (err) {
       setErr(true);
+    };
+  };
 
   return (
     <div className="login-form-container">
@@ -61,6 +62,5 @@ function LoginPage(){
       </Form>
     </div>
   );
-  }
-
+  };
 export default LoginPage;
