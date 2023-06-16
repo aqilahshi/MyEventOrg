@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+import './loginstyle.css'; // Import custom CSS file for styling
 
 function LoginPage() {
   const searchParams = new URLSearchParams(window.location.search);
   const role = searchParams.get('role');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  const handleSubmit = (e) => {
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign-in logic here, e.g., make an API request
+    const email = e.target[0].value;
+    const password = e.target[1].value;
 
-    console.log('Sign-in details:', { role, email, password });
-    // Reset form fields
-    setEmail('');
-    setPassword('');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate(`/${role}?email=${email}`);
+    } catch (err) {
+      setErr(true);
+    }
   };
-
-
-  // return <div>Welcome, {role}!</div>;
 
   return (
     <div className="login-form-container">
-      
-      <div className="welcome-message">You sign in as: {role}!
-      <p>We will collect your name later!!!!</p></div>
-      
+      <div className="welcome-message">You are signing in as: {role}!</div>
       <Form onSubmit={handleSubmit} className="login-form">
         <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
@@ -37,7 +39,6 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
-
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -47,10 +48,10 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-
         <Button variant="primary" type="submit" className="submit-button">
           Sign In
         </Button>
+        {err && <span>Something went wrong</span>}
       </Form>
     </div>
   );
