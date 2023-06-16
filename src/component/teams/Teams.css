@@ -34,15 +34,18 @@
     background-color: #f8f8f8;
     color: #000;
     align-items: center; /* Center the content horizontally */
-  }
-  
-  .content-row {
+    font-family: 'Arial', sans-serif; /* Apply a different font family */
+}
+
+.content-row {
     display: flex;
+    flex-wrap: wrap; /* Wrap the content onto multiple lines */
+    justify-content: center; /* Center the content horizontally */
+    gap: 30px; /* Adjust the gap between the squares */
     margin-bottom: 60px;
-    margin-right:auto;
-  }
-  
-  .square {
+}
+
+.square {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,36 +55,38 @@
     padding: 10px;
     background-color: #ffffff;
     border-radius: 8px;
-    margin: 0 30px; /* Adjust the margin between the boxes */
-  }
-  
-  @media (max-width: 768px) {
-    /* Adjust the styles for smaller screens */
-    .content-row {
-      flex-wrap: wrap; /* Wrap the content onto multiple lines */
-    }
-  
-    .square {
-      flex-basis: calc(50% - 20px); /* Adjust the width of the boxes to fit two in a row */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    /* Adjust the styles for even smaller screens */
-    .square {
-      flex-basis: calc(100% - 20px); /* Adjust the width of the boxes to occupy the full row */
-    }
-  }
-  
-  
-  .team-button {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.square:hover {
+    transform: translateY(-5px); /* Add a slight upward lift effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.square p {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px; /* Adjust the font size */
+    font-weight: bold; /* Apply a bold font weight */
+    color: #333; /* Apply a different font color */
+}
+
+.team-button {
     align-self: flex-end;
     margin-top: 10px;
-    padding: 5px 10px;
+    padding: 8px 16px;
     background-color: #040C18;
     color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-  }
-  
+    transition: background-color 0.3s ease;
+    font-family: 'Arial', sans-serif; /* Apply a different font family */
+    font-size: 14px; /* Adjust the font size */
+    font-weight: bold; /* Apply a bold font weight */
+}
+
+.team-button:hover {
+    background-color: #023165;
+}

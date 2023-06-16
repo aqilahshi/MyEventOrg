@@ -14,6 +14,8 @@ import Sidebar from './component/basic/Sidebar';
 import Topbar from './component/basic/Topbar';
 import Content from './component/teams/Content';
 import Scheduler from './component/calander/Scheduler';
+import Chat from './component/chat/Chat';
+
 
 function App() {
   
@@ -51,12 +53,19 @@ function App() {
     //   <Topbar />
     //   <div className="content-sidebar-wrapper">
     //     <Sidebar />
-    //     <Content />
+    //     {/* <Content /> */}
+    //     {/* <Scheduler/> */}
     //   </div>
     // </div>
-    <div>
-      <Scheduler/>
-    </div>
+    // <div>
+    //   <Scheduler/>
+    // </div>
+    // <div>
+      <Chat/>
+    // </div>
+    // <div>
+    //   hai
+    // </div>
 
   );
 }

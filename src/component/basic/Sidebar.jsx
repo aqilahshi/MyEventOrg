@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faVideo, faCalendar, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
+import { faBell, faVideo, faCalendar, faPencilAlt, faComment } from '@fortawesome/free-solid-svg-icons';
 import './Basic.css';
 
 const Sidebar = () => {
@@ -17,6 +17,9 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-icon">
                 <FontAwesomeIcon icon={faPencilAlt} />
+            </div>
+            <div className="sidebar-icon">
+                <FontAwesomeIcon icon={faComment} />
             </div>
         </div>
     );
