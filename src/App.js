@@ -33,6 +33,9 @@ import EditAttribute from "./pages/vendor/EditAttribute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ManageAdmin from "./pages/admin/ManageAdmin";
 import Testing from "./pages/admin/testing";
+import AddNewAdmin from "./pages/admin/AddNewAdmin";
+import VerifyVendor from "./pages/admin/VerifyVendor";
+import ManageVendor from "./pages/admin/ManageVendor";
 
 
 import { Navbar, Image } from 'react-bootstrap';
@@ -62,6 +65,9 @@ const TopNavbar = () => {
     /^\/editattribute\/\d+\/\w+$/,
     '/admindashboard',
     '/manageadmin',
+    '/addnewadmin',
+    '/verifyvendor',
+    '/managevendor',
   ];
 
   // Check if the current route matches the navbarRoutes
@@ -151,6 +157,10 @@ const App = () => {
         <Route path="/testing" element={<Testing />} />
         <Route path="/admindashboard" element={<AdminSidebar><AdminDashboard /></AdminSidebar>} />
         <Route path="/manageadmin" element={<AdminSidebar><ManageAdmin /></AdminSidebar>} />
+        <Route path="/addnewadmin" element={<AdminSidebar><AddNewAdmin /></AdminSidebar>} />
+        <Route path="/verifyvendor" element={<AdminSidebar><VerifyVendor /></AdminSidebar>} />
+        <Route path="/managevendor" element={<AdminSidebar><ManageVendor /></AdminSidebar>} />
+       
 
         <Route path="/register" element={<VendorSidebar><Register /></VendorSidebar>} />
         <Route path="/newproduct" element={<VendorSidebar><NewProduct /></VendorSidebar>} />

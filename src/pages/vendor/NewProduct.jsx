@@ -26,7 +26,7 @@ const CreatePost = () => {
     y.preventDefault();
 
     try {
-      const docRef = await addDoc(collection(db, "product"), {
+      const docRef = await addDoc(collection(db, "Product"), {
         productname: productname,
         productdesc: productdesc,
         productprice: productprice,

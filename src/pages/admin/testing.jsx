@@ -1,88 +1,86 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, Row, Col, Button } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const Testing = () => {
-    
-    const [themeColor, setThemeColor] = useState('light'); // Initial theme color
-    
-    const changeThemeColor = () => {
-        const newColor = themeColor === 'light' ? 'dark' : 'light';
-        setThemeColor(newColor);
-      
-        // Update CSS variables
-        const root = document.documentElement;
-        if (newColor === 'light') {
-          root.style.setProperty('--primary-color', '#007bff');
-          root.style.setProperty('--background-color', '#ffffff');
-          root.style.setProperty('--font-color', '#000000');
-          root.style.setProperty('--line-color', 'rgb(75, 192, 192)');
-        } else {
-          root.style.setProperty('--primary-color', '#ffffff');
-          root.style.setProperty('--background-color', '#000000');
-          root.style.setProperty('--font-color', '#ffffff');
-          root.style.setProperty('--line-color', 'rgb(175, 224, 229)');
-        }
-      };
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
 
-      
-  // Sample data for the line chart
-  const chartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [
-      {
-        label: 'Sales',
-        data: [12, 19, 3, 5, 2, 3],
-        fill: false,
-        borderColor: themeColor === 'light' ? 'rgb(75, 192, 192)' : 'rgb(175, 224, 2)',
-        tension: 0.1,
-      },
-    ],
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create a new user object
+    const newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      role: role,
+    };
+
+    try {
+      // Insert the new user into the "User" collection in Firestore
+      const docRef = await addDoc(collection(db, 'User'), newUser);
+      console.log('User added with ID: ', docRef.id);
+    } catch (error) {
+      console.error('Error adding user: ', error);
+    }
   };
 
   return (
     <div className='vendorpage'>
-        <Button variant="primary" onClick={changeThemeColor}>
-        Change Theme
-        </Button>
-
-      <Navbar bg={themeColor} expand="lg">
-        <Navbar.Brand>Admin Dashboard</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#users">Users</Nav.Link>
-            <Nav.Link href="#vendors">Vendors</Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link href="#settings">Settings</Nav.Link>
-            <Nav.Link href="#logout">Logout</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-      <Container fluid>
-        <Row>
-          <Col md={3}>
-            <h4>Admin Panel</h4>
-            <ul>
-              <li>Manage Admins</li>
-              <li>Verify Vendors</li>
-              <li>Other Options</li>
-            </ul>
-          </Col>
-          <Col md={9}>
-            <h4>Sales Statistics</h4>
-            <Line data={chartData} />
-          </Col>
-        </Row>
-      </Container>
+      <h2>Testing - Add User</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>First Name:</label>
+          <input
+            type='text'
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Last Name:</label>
+          <input
+            type='text'
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Role:</label>
+          <input
+            type='text'
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          />
+        </div>
+        <button type='submit'>Add User</button>
+      </form>
     </div>
   );
 };
-
-
-
 
 export default Testing;
 
@@ -496,3 +494,86 @@ export default Testing;
 
 
 
+// const Testing = () => {
+    
+//   const [themeColor, setThemeColor] = useState('light'); // Initial theme color
+  
+//   const changeThemeColor = () => {
+//       const newColor = themeColor === 'light' ? 'dark' : 'light';
+//       setThemeColor(newColor);
+    
+//       // Update CSS variables
+//       const root = document.documentElement;
+//       if (newColor === 'light') {
+//         root.style.setProperty('--primary-color', '#007bff');
+//         root.style.setProperty('--background-color', '#ffffff');
+//         root.style.setProperty('--font-color', '#000000');
+//         root.style.setProperty('--line-color', 'rgb(75, 192, 192)');
+//       } else {
+//         root.style.setProperty('--primary-color', '#ffffff');
+//         root.style.setProperty('--background-color', '#000000');
+//         root.style.setProperty('--font-color', '#ffffff');
+//         root.style.setProperty('--line-color', 'rgb(175, 224, 229)');
+//       }
+//     };
+
+    
+// // Sample data for the line chart
+// const chartData = {
+//   labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+//   datasets: [
+//     {
+//       label: 'Sales',
+//       data: [12, 19, 3, 5, 2, 3],
+//       fill: false,
+//       borderColor: themeColor === 'light' ? 'rgb(75, 192, 192)' : 'rgb(175, 224, 2)',
+//       tension: 0.1,
+//     },
+//   ],
+// };
+
+// return (
+//   <div className='vendorpage'>
+//       <Button variant="primary" onClick={changeThemeColor}>
+//       Change Theme
+//       </Button>
+
+//     <Navbar bg={themeColor} expand="lg">
+//       <Navbar.Brand>Admin Dashboard</Navbar.Brand>
+//       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+//       <Navbar.Collapse id="basic-navbar-nav">
+//         <Nav className="mr-auto">
+//           <Nav.Link href="#home">Home</Nav.Link>
+//           <Nav.Link href="#users">Users</Nav.Link>
+//           <Nav.Link href="#vendors">Vendors</Nav.Link>
+//         </Nav>
+//         <Nav>
+//           <Nav.Link href="#settings">Settings</Nav.Link>
+//           <Nav.Link href="#logout">Logout</Nav.Link>
+//         </Nav>
+//       </Navbar.Collapse>
+//     </Navbar>
+//     <Container fluid>
+//       <Row>
+//         <Col md={3}>
+//           <h4>Admin Panel</h4>
+//           <ul>
+//             <li>Manage Admins</li>
+//             <li>Verify Vendors</li>
+//             <li>Other Options</li>
+//           </ul>
+//         </Col>
+//         <Col md={9}>
+//           <h4>Sales Statistics</h4>
+//           <Line data={chartData} />
+//         </Col>
+//       </Row>
+//     </Container>
+//   </div>
+// );
+// };
+
+
+
+
+// export default Testing;

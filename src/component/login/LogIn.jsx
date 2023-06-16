@@ -1,66 +1,115 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
+import { Link, useNavigate } from 'react-router-dom';
 
-
-function LoginPage(){
-
+function LoginPage() {
   const searchParams = new URLSearchParams(window.location.search);
-  const role = searchParams.get('role');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [err, setErr] = useState(false);
+  const roleInherited = searchParams.get('role');
+
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [error, setError] = useState('');
+
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle sign-in logic here, e.g., make an API request
-    const email = e.target[0].value;
-    const password = e.target[1].value;
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate(`/${role}?email=${email}`);
-    } catch (err) {
-      setErr(true);
-    };
+      // Query the Firestore collection for the provided email
+      const q = query(collection(db, 'User'), where('email', '==', loginEmail));
+      const querySnapshot = await getDocs(q);
+
+      // Check if a user with the provided email exists
+      if (querySnapshot.empty) {
+        setError('Invalid email. User not found.');
+        return;
+      }
+
+      // Find the user document
+      const userDoc = querySnapshot.docs[0];
+
+      // Check if the provided password matches the stored password
+      if (userDoc.data().password !== loginPassword) {
+        setError('Invalid password.');
+        return;
+      }
+
+      if (userDoc.data().role !== roleInherited) {
+        setError(`You are not ${roleInherited}.`);
+        return;
+      }
+
+      const userRole = userDoc.data().role;
+
+      // User login successful
+      setError('');
+
+      switch (userRole) {
+        case 'Admin':
+          navigate('/admindashboard');
+          break;
+        case 'Vendor':
+          navigate('/vendordashboard');
+          break;
+        case 'Participant':
+          navigate('/participants');
+          break;
+        case 'Lecturer':
+          navigate('/gg');
+          break;
+        case 'Committee':
+          navigate('/gg');
+          break;
+        default:
+          setError('Invalid role.');
+          break;
+      }
+
+      console.log('User logged in successfully!');
+    } catch (error) {
+      console.error('Error logging in: ', error);
+      setError('An error occurred while logging in.');
+    }
   };
 
   return (
-    <div className="login-form-container">
-      
-      <div className="welcome-message">You are signing in as: {role}!</div>
-      
-      <Form onSubmit={handleSubmit} className="login-form">
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
+    <Container className='vendorpage'>
+      <h2>{roleInherited} Login</h2>
+      {error && <Alert variant='danger'>{error}</Alert>}
+      <Form onSubmit={handleLogin}>
+        <Form.Group controlId='email'>
+          <Form.Label>Email:</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type='email'
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
           />
         </Form.Group>
-
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
+        <Form.Group controlId='password'>
+          <Form.Label>Password:</Form.Label>
           <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type='password'
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit" className="submit-button">
-          Sign In
+        <Button variant='primary' type='submit'>
+          Login
         </Button>
-        {err && <span>Something went wrong</span>}
       </Form>
-    </div>
+      {roleInherited === 'Vendor' && (
+        <p>
+          Don't have an account? <Link to='/register'>Register</Link>
+        </p>
+      )}
+    </Container>
   );
-  };
+}
+
 export default LoginPage;
