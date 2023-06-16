@@ -7,6 +7,7 @@ const Topbar = () => {
     const username = 'John Doe'; // Replace 'John Doe' with the actual username
 
     return (
+        <div className="app">
         <div className="topbar">
             <div className="left-side">
                 <span className="left-side-text">Teams</span>
@@ -21,6 +22,8 @@ const Topbar = () => {
                 <span className="username">{username}</span>
                 <FontAwesomeIcon icon={faUser} className="user-icon" />
             </div>
+        </div>
+
         </div>
     );
 };

@@ -102,6 +102,18 @@
   transform: scale(1.2);
 }
 
-  
+/* for teams*/
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-sidebar-wrapper {
+  display: flex;
+  flex: 1;
+} 
+
+
   
   

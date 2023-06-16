@@ -45,14 +45,14 @@ function App() {
   //     <Route path="/room/:roomID" element={<Room />} />
   //   </Routes>
   // </Router>
-    <div className="app">
-      <Topbar />
-      <div className="content-sidebar-wrapper">
-        <Sidebar />
-        <Content />
-        {/* <Scheduler/> */}
-      </div>
-    </div>
+    // <div className="app">
+    //   <Topbar />
+    //   <div className="content-sidebar-wrapper">
+    //     <Sidebar />
+    //     <Content />
+    //     <Scheduler/> 
+    //   </div>
+    // </div>
     // <div>
     //   <Scheduler/>
     // </div>
@@ -62,6 +62,22 @@ function App() {
     // <div>
     //  <Todo/>
     // </div>
+    <Router>
+            <div className="app">
+                <Topbar />
+                <div className="content-sidebar-wrapper">
+                    <Sidebar />
+                    <Routes>
+                        <Route path="/" element={<h1>Home</h1>} />
+                        <Route path="/content" element={<Content />} />
+                        <Route path="/vidcall" element={<Home />} />
+                        <Route path="/calendar" element={<Scheduler />} />
+                        <Route path="/todo" element={<Todo />} />
+                        <Route path="/chat" element={<Chat />} />
+                    </Routes>
+                </div>
+            </div>
+        </Router>
 
   );
 }
