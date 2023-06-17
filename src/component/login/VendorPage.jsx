@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-export default class AdminPage extends Component {
+export default class VendorPage extends Component {
   render() {
     return (
-      <div>AdminPage</div>
+      <div>VendorPage</div>
     )
   }
 }
