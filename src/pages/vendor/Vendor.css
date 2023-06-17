@@ -1,0 +1,206 @@
+  .form-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .preview-image {
+    width: 200px;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  .register-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: azure;
+    /* background-image: url("../../../public/images/vendor/images.jpg"); */
+    background-size: cover;
+    background-position: center;
+    flex: 1;
+  }
+
+  /* vendor side bar part */
+  .vendorsidebar {
+    /* position: fixed; */
+    position: relative;
+    top: 0;
+    left: 0;
+    /* height: 100vh; */
+    flex-shrink: 0;
+    width: 200px;
+    background-color: beige;
+    /* background-color: #F6F6F7; */
+    transition: width 0.3s ease;
+	  font: 14px arial;
+    padding: 25px;
+    padding-top: 70px;
+  }
+  
+  .vendorsidebar.collapsed {
+    width: 0;
+  }
+  
+  .menu {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    list-style: none;
+  }
+  
+  .menu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .menu li.active {
+    background-color: #e6a6a6;
+    /* background-color:#A4E8F2; */
+  }
+
+  .vendor-page {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .category-title {
+    margin: 20px 0px 10px;
+    font: 12px arial;
+    font-weight: bold;
+    /* padding-bottom: 20px;	 */
+    /* border-bottom: 2px solid  #ddd; */
+  }
+
+
+    .vendornavbar {
+      /* background-color: white; */
+      background-color: #F6F6F7;
+      /* height: 60px; */
+    }
+
+
+
+    .bullet-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .bullet-list li::before {
+      content: '•';
+      display: inline-block;
+      margin-right: 0.5em;
+      color: blue; /* Replace with your desired color */
+    }
+
+
+
+    /* .category-list, .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    } */
+    
+    /* .card {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #f5f5f5;
+    } */
+    
+    /* Optional: Adjust card styling for different screen sizes
+    @media (min-width: 576px) {
+      .card {
+        width: calc(50% - 10px);
+      }
+    } */
+    
+    /* @media (min-width: 992px) {
+      .card {
+        width: calc(33.33% - 10px);
+      }
+    } */
+    
+    
+    /* .card-title {
+      margin-bottom: 10px;
+    } */
+    
+    .checkbox-label {
+      font-weight: bold;
+    }
+    
+    .checkbox-select-all {
+      margin-bottom: 10px;
+    }
+    
+    .add-category-button, .add-product-button {
+      margin-bottom: 10px;
+    }
+
+
+    .status-toggle-button {
+      width: 60px;
+      height: 30px;
+      padding: 0;
+      border-radius: 15px;
+      position: relative;
+      background-color: grey;
+      border: none;
+      overflow: hidden;
+    }
+    
+    .status-toggle-button.active {
+      background-color: green;
+    }
+    
+    .slider {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .status-toggle-button.active .slider {
+      transform: translateX(30px);
+    }
+    
+
+
+
+
+
+
+    .vendorpage {
+      margin: 60px 20px 0px 20px;
+      /* width: 100%; */
+      /* overflow-x: auto; */
+       /* background-color: #e6a6a6;  */
+    } 
+
+    .custom-div {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+    }
+    
+    .dropzone {
+      border: 2px dashed #ccc;
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+    }
+
+
+h7{
+  font-size: 16px;
+  font-weight: bold;
+}

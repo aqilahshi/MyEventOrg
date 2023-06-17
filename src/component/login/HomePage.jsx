@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 const HomePage = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("./images/login/images.jpg")`,
+        backgroundImage: `url("./images/USM.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '90vh',
@@ -29,7 +29,7 @@ const HomePage = () => {
         <Container>
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3 mt-5">
-              <Link to='/login?role=participants'><Button variant="primary" >
+              <Link to='/login?role=participant'><Button variant="primary" >
                 Participant
               </Button></Link>
             </Col>
@@ -37,7 +37,7 @@ const HomePage = () => {
           
            <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <Link to='/login?role=committee'><Button variant="primary" >
+            <Link to='/login?role=Committee'><Button variant="primary" >
                 Committee
               </Button></Link>
             </Col>
@@ -45,23 +45,23 @@ const HomePage = () => {
 
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <Link to='/login?role=vendor'><Button variant="primary" >
-                Vendors
+            <Link to='/login?role=Vendor'><Button variant="primary" >
+                Vendor
               </Button></Link>
             </Col>
           </Row>
 
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <Link to='/login?role=lecturer'><Button variant="primary" >
-                Lecturers
+            <Link to='/login?role=Lecturer'><Button variant="primary" >
+                Lecturer
               </Button></Link>
             </Col>
           </Row>
 
           <Row className="justify-content-center">
             <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <Link to='/login?role=admin'><Button variant="primary" >
+            <Link to='/login?role=Admin'><Button variant="primary" >
                 Admin
               </Button></Link>
             </Col>
