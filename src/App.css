@@ -63,4 +63,14 @@
   margin-top: 20px;
 }
 
+/* for teams*/
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
+.content-sidebar-wrapper {
+  display: flex;
+  flex: 1;
+}
