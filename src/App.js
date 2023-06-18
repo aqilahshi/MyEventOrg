@@ -9,6 +9,9 @@ import LoginPage from './component/login/LogIn';
 import './component/login/loginstyle.css';
 import Attendance from './component/participant/Attendance';
 import ParticipantPage from './component/participant/ParticipantPage';
+import CreateQuiz from './component/activity/quiz/CreateQuiz';
+import DetailsQuiz from './component/activity/quiz/DetailsQuiz';
+import LuckyDrawAlgo from './component/activity/luckydraw/LuckyDrawAlgo';
 
 
 
@@ -149,6 +152,11 @@ const App = () => {
         {/* Route Committee Both Lecturer n Committee*/} 
             {/* Route Lecturer */}
             {/* Route Student */}
+          <Route path="/activity" element={<CommitteePage />} />
+          <Route path="/createquiz" element={<CreateQuiz />} />
+          <Route path="/createquizdetails" element={<DetailsQuiz />} />
+          <Route path="/createquiz/createquizdetails" element={<DetailsQuiz />} />
+          <Route path="/createluckydraw" element={<LuckyDrawAlgo />} />
           {/* Route Admin */}
           {/* Route Vendor */}
 
