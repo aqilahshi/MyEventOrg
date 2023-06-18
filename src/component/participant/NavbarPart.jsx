@@ -53,6 +53,9 @@ function NavbarPart() {
                 <Nav.Link href="/awardpage" className="border-bottom ">
                   <h5>|Award Page </h5>
                 </Nav.Link>
+                <Nav.Link href="/livepoll" className="border-bottom ">
+                  <h5>| </h5>
+                </Nav.Link>
                 <Nav.Link href="/" className="border-bottom ">
                   <h5>|Logout</h5>
                 </Nav.Link>
