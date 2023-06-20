@@ -64,7 +64,7 @@ function LoginPage() {
           navigate('/import');
           break;
         case 'Committee':
-          navigate('/gg');
+          navigate('/activity');
           break;
         default:
           setError('Invalid role.');
