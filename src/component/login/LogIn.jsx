@@ -61,10 +61,10 @@ function LoginPage() {
           navigate('/participants');
           break;
         case 'Lecturer':
-          navigate('/gg');
+          navigate('/import');
           break;
         case 'Committee':
-          navigate('/gg');
+          navigate('/activity');
           break;
         default:
           setError('Invalid role.');

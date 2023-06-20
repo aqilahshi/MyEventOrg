@@ -12,8 +12,7 @@ import ParticipantPage from './component/participant/ParticipantPage';
 import CreateQuiz from './component/activity/quiz/CreateQuiz';
 import DetailsQuiz from './component/activity/quiz/DetailsQuiz';
 import LuckyDrawAlgo from './component/activity/luckydraw/LuckyDrawAlgo';
-
-
+import Export1 from './component/import/export';
 
 
 
@@ -125,7 +124,7 @@ const App = () => {
       <Routes>
 
         <Route
-          path="/" element={<HomePage/>}
+          path="/" element={<Export1/>}
         />
         <Route
           path="/login" element={<LoginPage/>}
