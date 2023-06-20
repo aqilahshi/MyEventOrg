@@ -3,14 +3,19 @@ import { shuffle } from 'lodash';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import Confetti from 'react-confetti';
 import './Luckydraw.css';
+import { Link } from "react-router-dom";
 import { db } from "../../../firebase";
-
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 const LuckyDrawAlgo = () => {
   const [names, setNames] = useState([]);
   const [startClicked, setStartClicked] = useState(false);
   const [winner, setWinner] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const participantsCollectionRef = collection(db, "Participant");
 
   const startRaffle = () => {
     if (names.length <= 1 || startClicked) {
@@ -21,45 +26,41 @@ const LuckyDrawAlgo = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    let filteringTimer;
+    
+    const fetchParticipants = async () => {
       try {
-        const snapshot = await db.collection('Participant').get();
-        const participants = snapshot.docs.map(doc => doc.data());
-        const matricnos = participants.map(participant => participant.matricno);
+        const querySnapshot = await getDocs(participantsCollectionRef);
+        const participantsData = querySnapshot.docs.map(doc => doc.data());
+        const matricnos = participantsData.map(participant => participant.matricno);
         setNames(matricnos);
       } catch (error) {
         console.error('Error fetching participants:', error);
       }
     };
-
-    fetchData();
-
-    return () => {
-      // Clean up any Firebase listeners or resources here if necessary
-    };
-  }, []);
-
-  useEffect(() => {
-    let filteringTimer;
+  
     if (startClicked) {
       filteringTimer = setInterval(() => {
         const randomIndex = Math.floor(Math.random() * names.length);
         const filteredNames = names.filter((_, index) => index !== randomIndex);
-
+  
         setNames(filteredNames);
-
+  
         if (filteredNames.length === 1) {
           clearInterval(filteringTimer);
           setWinner(filteredNames[0]);
           setShowConfetti(true);
         }
       }, 100);
+    } else {
+      fetchParticipants();
     }
-
+  
     return () => {
       clearInterval(filteringTimer);
     };
-  }, [names, startClicked]);
+  }, [participantsCollectionRef, startClicked, names]);
+  
 
   const restartRaffle = () => {
     setStartClicked(false);
@@ -74,8 +75,13 @@ const LuckyDrawAlgo = () => {
   };
 
   return (
-    <div className="lucky-draw-container">
-      <div className="lucky-draw-controls">
+    <Container className="justify-content-center align-text-center" style={{marginTop:"70px"}}>
+      <div><Link to="/createquiz"><Button variant="outline-dark" style={{marginTop:'0px', float:'left'}}>
+        Back
+      </Button></Link>
+      </div>
+      
+      <div className="d-flex justify-content-center lucky-draw-controls">
         {!startClicked && (
           <>
             <Button variant="primary" onClick={startRaffle} disabled={names.length <= 1}>
@@ -91,7 +97,7 @@ const LuckyDrawAlgo = () => {
       <Container className="name-buttons">
         <Row className="justify-content-center">
           {names.map((name, index) => (
-            <Col key={index} xs={6} sm={4} md={3} lg={2} className="name-button text-center">
+            <Col key={index} xs={6} sm={4} md={3} lg={2} className="name-button text-center ">
               <Button variant="primary" disabled={startClicked}>
                 {name}
               </Button>
@@ -100,7 +106,7 @@ const LuckyDrawAlgo = () => {
         </Row>
       </Container>
       {winner && (
-        <div className="raffle-ends">
+        <div className="raffle-ends ">
           {showConfetti && (
             <div className="confetti-container">
               <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -115,7 +121,7 @@ const LuckyDrawAlgo = () => {
           </Button>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

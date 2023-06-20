@@ -12,11 +12,8 @@
     "firebase": "^9.22.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
-<<<<<<< Updated upstream
     "react-confetti": "^6.1.0",
-=======
     "react-chartjs-2": "^5.2.0",
->>>>>>> Stashed changes
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.9.0",
