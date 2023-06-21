@@ -248,7 +248,7 @@ const AdminDashboard = () => {
         <Row>
             {/* big graph */}
             <Col style={{ maxWidth: '50%', minWidth: '250px'}}>
-              <Card style={{ height: '310px'}}>
+              <Card className="shadow expandable-card" style={{ height: '310px'}}>
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <Card.Title>{`${chartType.charAt(0).toUpperCase() + chartType.slice(1)} Sales`}</Card.Title>
@@ -277,7 +277,7 @@ const AdminDashboard = () => {
             <Col style={{ maxWidth: '25%', minWidth: '250px'}}>
               {/* 1st row */}
               <Row>
-                <Card style={{ height: '95px', marginTop: '14px' }}>
+                <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '14px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
                       <Card.Title>hgjghohuohgiyghhh</Card.Title>
@@ -295,7 +295,7 @@ const AdminDashboard = () => {
 
               {/* 2nd row */}
               <Row>
-                <Card style={{ height: '95px', marginTop: '12px' }}>
+                <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '12px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
                       <Card.Title>hgjghohuohgiyghhh</Card.Title>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
 
               {/* 3rd row */}
               <Row>
-                <Card style={{ height: '95px', marginTop: '13px' }}>
+                <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '13px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
                       <Card.Title>hgjghohuohgiyghhh</Card.Title>
@@ -331,7 +331,7 @@ const AdminDashboard = () => {
 
             {/* data in right column */}
             <Col style={{ maxWidth: '25%', minWidth: '250px'}}>
-              <Card style={{ height: '310px'}}>
+              <Card className="shadow expandable-card" style={{ height: '310px'}}>
                   <Card.Body>
                     <div style={{ backgroundColor: 'lightblue', padding: '10px' }}>
                       <h6>Dummy Curve Line Graph 3</h6>
@@ -362,7 +362,7 @@ const AdminDashboard = () => {
         <Row>
             {/* 1st details */}
             <Col style={{ maxWidth: '37%'}}>
-            <Card style={{ height: '340px'}}>
+            <Card className="shadow expandable-card" style={{ height: '340px'}}>
                   <Card.Body>
               <Table striped bordered hover>
                 <thead>
@@ -400,7 +400,7 @@ const AdminDashboard = () => {
 
             {/* 2nd details with graph */}
             <Col style={{ maxWidth: '25%'}}>
-              <Card style={{ height: '340px'}}>
+              <Card className="shadow  expandable-card" style={{ height: '340px'}}>
                   <Card.Body>
                     <Doughnut data={doughnutdata} />
                   </Card.Body>
@@ -411,7 +411,7 @@ const AdminDashboard = () => {
             <Col style={{ marginTop: '14px', maxWidth: '37%'}}>
                 {/* 1st row circle graph */}
                 <Row>
-                <Card style={{ height: '128px' }}>
+                <Card className="shadow  expandable-card" style={{ height: '128px' }}>
                   <Card.Body style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ width: '20%' }}>
                       <Doughnut data={doughnutdata} />
@@ -434,7 +434,7 @@ const AdminDashboard = () => {
 
                 {/* 2nd row bar graph */}
                 <Row>
-                  <Card style={{ height: '200px', marginTop: '12px'}}>
+                  <Card className="shadow expandable-card" style={{ height: '200px', marginTop: '12px'}}>
                     <Card.Body>
                       <Bar data={bardata} height={120}/>
                     </Card.Body>

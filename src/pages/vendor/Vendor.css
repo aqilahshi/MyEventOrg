@@ -96,39 +96,6 @@
       color: blue; /* Replace with your desired color */
     }
 
-
-
-    /* .category-list, .product-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    } */
-    
-    /* .card {
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 10px;
-      background-color: #f5f5f5;
-    } */
-    
-    /* Optional: Adjust card styling for different screen sizes
-    @media (min-width: 576px) {
-      .card {
-        width: calc(50% - 10px);
-      }
-    } */
-    
-    /* @media (min-width: 992px) {
-      .card {
-        width: calc(33.33% - 10px);
-      }
-    } */
-    
-    
-    /* .card-title {
-      margin-bottom: 10px;
-    } */
     
     .checkbox-label {
       font-weight: bold;
