@@ -41,7 +41,7 @@ const ImportDataFromJson = () => {
   return (
     <div>
       <input type="file" accept=".json" multiple onChange={handleFileUpload} />
-      <button type="submit">Upload</button>
+      {/* <button type="submit">Upload</button> */}
     </div>
   );
 };
