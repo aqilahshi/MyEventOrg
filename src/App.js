@@ -12,7 +12,8 @@ import ParticipantPage from './component/participant/ParticipantPage';
 import CreateQuiz from './component/activity/quiz/CreateQuiz';
 import DetailsQuiz from './component/activity/quiz/DetailsQuiz';
 import LuckyDrawAlgo from './component/activity/luckydraw/LuckyDrawAlgo';
-import Export1 from './component/import/export';
+import ExportDatatable from './component/import/export';
+import ImportDatatable from './component/import/import';
 
 
 
@@ -124,7 +125,7 @@ const App = () => {
       <Routes>
 
         <Route
-          path="/" element={<Export1/>}
+          path="/" element={<HomePage/>}
         />
         <Route
           path="/login" element={<LoginPage/>}
