@@ -235,7 +235,7 @@ function CreateQuiz() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                   <ListGroup.Item>Description: {quiz.description}</ListGroup.Item>
-                  <ListGroup.Item>Question Total: 15</ListGroup.Item>
+                  {/* <ListGroup.Item>Question Total: {quiz.length}</ListGroup.Item> */}
                 </ListGroup>
                 <Card.Body>
                   <div style={{ float: 'right' }}>
