@@ -9,7 +9,7 @@ const HomePage = () => {
         backgroundImage: `url("./images/login/images.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '90vh',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

@@ -3,26 +3,35 @@ import { ListGroup, Card, Modal, Form, InputGroup, Row, Col, Container } from 'r
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import { db } from "../../../firebase";
+import { useParams } from 'react-router-dom';
 import {
   collection,
   addDoc,
   query,
   where,
   getDocs,
+  getDoc,
   deleteDoc,
   doc,
   updateDoc
 } from "firebase/firestore";
+import NavbarComm from '../../committeeNavbar/NavbarComm';
 
 function DetailsQuiz(){
+  const searchParams = new URLSearchParams(window.location.search);
+  const quizID = searchParams.get('quizid');
+  const eventId = searchParams.get('eventid');
+  const userEmail = searchParams.get('email');
+  console.log('EventID:' , eventId);
+  console.log('QuizID:' , quizID);
   const [show, setShow] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [question, setquestion] = useState("");
-  const [option1, setoption1] = useState("");
-  const [option2, setoption2] = useState("");
-  const [option3, setoption3] = useState("");
-  const [option4, setoption4] = useState("");
-  const [answer, setanswer] = useState("");
+  const [quizQuestion, setquestion] = useState("");
+  const [quizOption1, setoption1] = useState("");
+  const [quizOption2, setoption2] = useState("");
+  const [quizOption3, setoption3] = useState("");
+  const [quizOption4, setoption4] = useState("");
+  const [quizCorrectAns, setanswer] = useState("");
   const [quizCards, setQuizCards] = useState([]);
   const [editingQuizId, setEditingQuizId] = useState(null); // Track the quiz being edited
   const quizzesCollectionRef = collection(db, "Quiz");
@@ -40,7 +49,7 @@ function DetailsQuiz(){
 
   const handleCreateQuiz = async () => {
     // Check if the quiz already exists in the database
-    const quizzesQuery = query(quizzesCollectionRef, where("question", "==", question));
+    const quizzesQuery = query(quizzesCollectionRef, where("quizQuestion", "==", quizQuestion));
     const querySnapshot = await getDocs(quizzesQuery);
   
     // Check if the quiz question already exists in the database
@@ -48,7 +57,7 @@ function DetailsQuiz(){
       // Quiz does not exist, proceed with adding the data
   
       // Check if any of the options are duplicate
-      const options = [option1, option2, option3, option4];
+      const options = [quizOption1, quizOption2, quizOption3, quizOption4];
       const duplicateOption = options.find((option, index) => options.indexOf(option) !== index);
   
       if (duplicateOption) {
@@ -58,12 +67,13 @@ function DetailsQuiz(){
       }
       
       await addDoc(quizzesCollectionRef, {
-        question,
-        option1,
-        option2,
-        option3,
-        option4,
-        answer
+        quizQuestion,
+        quizOption1,
+        quizOption2,
+        quizOption3,
+        quizOption4,
+        quizCorrectAns,
+        quizID: quizID
         // Add other quiz data fields as needed
       });
       handleClose();
@@ -81,8 +91,7 @@ function DetailsQuiz(){
       await deleteDoc(doc(quizzesCollectionRef, quizId));
       console.log("Quiz deleted successfully!");
       // Update the quiz cards after deleting the quiz
-      const updatedQuizCards = quizCards.filter((card) => card.id !== quizId);
-      setQuizCards(updatedQuizCards);
+      setQuizCards(prevCards => prevCards.filter((card) => card.id !== quizId));
     }
   };
   const handleEditQuiz = async (quizId) => {
@@ -91,12 +100,12 @@ function DetailsQuiz(){
   
     if (quizCard) {
       // Set the values of the quiz being edited in the state variables
-      setquestion(quizCard.question);
-      setoption1(quizCard.option1);
-      setoption2(quizCard.option2);
-      setoption3(quizCard.option3);
-      setoption4(quizCard.option4);
-      setanswer(quizCard.answer);
+      setquestion(quizCard.quizQuestion);
+      setoption1(quizCard.quizOption1);
+      setoption2(quizCard.quizOption2);
+      setoption3(quizCard.quizOption3);
+      setoption4(quizCard.quizOption4);
+      setanswer(quizCard.quizCorrectAns);
       setEditingQuizId(quizId); // Set the editingQuizId to the id of the quiz being edited
       setShow(true); // Open the modal for editing the quiz
     }
@@ -104,7 +113,7 @@ function DetailsQuiz(){
   
   const handleUpdateQuiz = async () => {
     // Check if any of the options are duplicate
-    const options = [option1, option2, option3, option4];
+    const options = [quizOption1, quizOption2, quizOption3, quizOption4];
     const duplicateOption = options.find((option, index) => options.indexOf(option) !== index);
   
     if (duplicateOption) {
@@ -116,12 +125,12 @@ function DetailsQuiz(){
     // Update the quiz in the database
     const quizRef = doc(quizzesCollectionRef, editingQuizId);
     await updateDoc(quizRef, {
-      question,
-      option1,
-      option2,
-      option3,
-      option4,
-      answer,
+      quizQuestion,
+      quizOption1,
+      quizOption2,
+      quizOption3,
+      quizOption4,
+      quizCorrectAns,
       // Add other quiz data fields as needed
     });
     handleClose();
@@ -129,39 +138,104 @@ function DetailsQuiz(){
     setShowDuplicateMessage(false);
     console.log("Quiz updated successfully!");
   };
-  
+
   useEffect(() => {
-    // Fetch existing quiz data from the database
-    const fetchQuizzes = async () => {
-      const querySnapshot = await getDocs(quizzesCollectionRef);
-      const quizzesData = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        quizzesData.push({
-          id: doc.id,
-          question: data.question,
-          option1: data.option1,
-          option2: data.option2,
-          option3: data.option3,
-          option4: data.option4,
-          answer: data.answer,
-          // Add other quiz data fields as needed
-        });
-      });
-      setQuizCards(quizzesData);
+    const fetchQuizData = async () => {
+      const q = query(collection(db, 'Quiz'), where('quizID', '==', quizID));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.size > 0) {
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+        setQuizCards(documents);
+        console.log('Quizzes found with the specified quizID');
+      } else {
+        console.log('No quizzes found with the specified quizID');
+      }
     };
 
-    fetchQuizzes();
-  }, [quizzesCollectionRef]);
+    fetchQuizData();
+  }, []);
+
+  // const quizRef = doc(db, "Quiz", quizID);
+  // useEffect(() => {
+  //   const fetchQuizzes = async () => {
+  //     const docSnapshot = await getDoc(quizRef);
+  //     if (docSnapshot.exists()) {
+  //       const data = docSnapshot.data();
+  //       setquestion(data.quizQuestion);
+  //       setoption1(data.quizOption1);
+  //       setoption2(data.quizOption2);
+  //       setoption3(data.quizOption3);
+  //       setoption4(data.quizOption4);
+  //       setanswer(data.quizCorrectAns);
+  //       console.log("Quiz found in the database");
+  //     } else {
+  //       console.log("Quiz not found in the database");
+  //     }
+  //   };
+
+  //   fetchQuizzes();
+  // }, [quizRef]);
+
+  // useEffect(() => {
+  //   // Fetch existing quiz data from the database
+  //   const fetchQuizzes = async () => {
+  //     const querySnapshot = await getDocs(quizzesCollectionRef);
+  //     const quizzesData = [];
+  //     querySnapshot.forEach((doc) => {
+  //       const data = doc.data();
+  //       quizzesData.push({
+  //         id: doc.id,
+  //         quizQuestion: data.quizQuestion,
+  //         quizOption1: data.quizOption1,
+  //         quizOption2: data.quizOption2,
+  //         quizOption3: data.quizOption3,
+  //         quizOption4: data.quizOption4,
+  //         quizCorrectAns: data.quizCorrectAns,
+  //         // Add other quiz data fields as needed
+  //       });
+  //     });
+  //     setQuizCards(quizzesData);
+  //   };
+
+  //   fetchQuizzes();
+  // }, []);
+
+  // Call CreateQuiz Data
+  const [quizDescription, setQuizDescription] = useState(null);
+  const [quizTitle, setQuizTitle] = useState('');
+
+  useEffect(() => {
+    const fetchQuizData = async () => {
+      const quizDocRef = doc(db, 'CreateQuiz', quizID);
+      const docSnapshot = await getDoc(quizDocRef);
+
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        setQuizTitle(data.quizTitle);
+        setQuizDescription(data.quizDescription);
+      } else {
+        console.log('Quiz not found in the database');
+      }
+    };
+
+    fetchQuizData();
+  }, [quizID]);
 
   return(
+    <div>
+    <NavbarComm 
+      eventId={eventId}
+      userEmail={userEmail}
+      />
     <Container>
     <blockquote className="blockquote text-center">
-      <Link to="/createquiz"><Button variant="outline-dark" style={{marginTop:'0px', float:'left'}}>
+      <Link to={`/createquiz/?eventid=${eventId}&email=${userEmail}`}><Button variant="outline-dark" style={{marginTop:'10px', float:'left'}}>
         Back
       </Button></Link>
-      <h1 className="mb=5" style={{textAlign: 'center', fontWeight: 'bold', color: 'black', marginTop:'30px'}}>Quiz Title</h1>
-      <footer>Your Quizzes Details</footer>
+      <br/>
+      <h1 className="mb=5" style={{textAlign: 'center', fontWeight: 'bold', color: 'black', marginTop:'10px'}}>{quizTitle}</h1>
+      <footer className='text-center'>{quizDescription}</footer>
       </blockquote>
       <div>
       <Button className="col-12 text-center" style={{marginBottom:'50px'}} onClick={handleShow}>
@@ -186,7 +260,7 @@ function DetailsQuiz(){
                       placeholder="Insert your quiz question"
                       aria-describedby="inputGroupPrepend"
                       required
-                      value={question}
+                      value={quizQuestion}
                       onChange={(e) => setquestion(e.target.value)}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -205,7 +279,7 @@ function DetailsQuiz(){
                     placeholder="Insert option"
                     aria-describedby="inputGroupPrepend"
                     required
-                    value={option1}
+                    value={quizOption1}
                     onChange={(e) => setoption1(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -221,7 +295,7 @@ function DetailsQuiz(){
                     placeholder="Insert option"
                     aria-describedby="inputGroupPrepend"
                     required
-                    value={option2}
+                    value={quizOption2}
                     onChange={(e) => setoption2(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -237,7 +311,7 @@ function DetailsQuiz(){
                     placeholder="Insert option"
                     aria-describedby="inputGroupPrepend"
                     required
-                    value={option3}
+                    value={quizOption3}
                     onChange={(e) => setoption3(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -253,7 +327,7 @@ function DetailsQuiz(){
                     placeholder="Insert option"
                     aria-describedby="inputGroupPrepend"
                     required
-                    value={option4}
+                    value={quizOption4}
                     onChange={(e) => setoption4(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -266,14 +340,14 @@ function DetailsQuiz(){
                 <Form.Select
                   aria-label="Select correct answer"
                   required
-                  value={answer}
+                  value={quizCorrectAns}
                   onChange={(e) => setanswer(e.target.value)}
                 >
                   <option value="">Select the correct answer option</option>
-                  <option value="A">Option 1</option>
-                  <option value="B">Option 2</option>
-                  <option value="C">Option 3</option>
-                  <option value="D">Option 4</option>
+                  <option value={quizOption1}>Option 1</option>
+                  <option value={quizOption2}>Option 2</option>
+                  <option value={quizOption3}>Option 3</option>
+                  <option value={quizOption4}>Option 4</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   Please select a correct answer.
@@ -293,17 +367,17 @@ function DetailsQuiz(){
     <Container className="justify-content-center">
         <Row xs={1} md={3} className="g-4">
           {quizCards.map((quiz) => (
-            <Col key={quiz.id} className="d-flex justify-content-center">
+            <Col key={quiz.quizID} className="d-flex justify-content-center">
               <Card style={{ width: '18rem' }} >
                 <Card.Body>
-                  <Card.Title>{quiz.question}</Card.Title>
+                  <Card.Title>{quiz.quizQuestion}</Card.Title>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroup.Item>A: {quiz.option1}</ListGroup.Item>
-                  <ListGroup.Item>B: {quiz.option2}</ListGroup.Item>
-                  <ListGroup.Item>C: {quiz.option3}</ListGroup.Item>
-                  <ListGroup.Item>D: {quiz.option4}</ListGroup.Item>
-                  <ListGroup.Item>Correct Answer: {quiz.answer}</ListGroup.Item>
+                  <ListGroup.Item>A: {quiz.quizOption1}</ListGroup.Item>
+                  <ListGroup.Item>B: {quiz.quizOption2}</ListGroup.Item>
+                  <ListGroup.Item>C: {quiz.quizOption3}</ListGroup.Item>
+                  <ListGroup.Item>D: {quiz.quizOption4}</ListGroup.Item>
+                  <ListGroup.Item>Correct Answer: {quiz.quizCorrectAns}</ListGroup.Item>
                 </ListGroup>
                 <Card.Body>
                   <div style={{ float: 'right' }}>
@@ -315,11 +389,6 @@ function DetailsQuiz(){
                     <Button variant="outline-dark text-center" style={{ marginRight: '3px' }} onClick={() => handleDeleteQuiz(quiz.id)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                      </svg>
-                    </Button>
-                    <Button variant="outline-dark text-center" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
-                        <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5Z" />
                       </svg>
                     </Button>
                   </div>
@@ -340,7 +409,9 @@ function DetailsQuiz(){
           </Button>
         </Modal.Footer>
     </Modal>
+    <br/>
     </Container>
+    </div>
   )
 }
 
