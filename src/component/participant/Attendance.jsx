@@ -1,43 +1,67 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { db } from "../../firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Attendance() {
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const email1 = searchParams.get('email');
+  const eventId = searchParams.get('eventid');
+  console.log('email:', email1);
+  console.log('eventId:', eventId);
   const usersCollectionRef = collection(db, "Participant");
   const [newName, setNewName] = useState("");
   const [newMatNo, setNewMatNo] = useState(0);
   const [newPhone, setPhone] = useState(0);
   const [newStudy, setStudy] = useState(0);
   const [newSchool, setSchool] = useState("");
+  const [error, setError] = useState("");
 
-  const createUser = async () => {
-    // Check if the user already exists in the database
-    const usersQuery = query(usersCollectionRef, where("email", "==", email1));
+  useEffect(() => {
+    checkUserExistence();
+  }, []);
+  
+  const checkUserExistence = async () => {
+    const usersQuery = query(
+      usersCollectionRef,
+      where("participantEmail", "==", email1),
+      where("eventID", "==", eventId)
+    );
     const querySnapshot = await getDocs(usersQuery);
 
-    if (querySnapshot.empty) {
-      // User does not exist, proceed with adding the data
-      await addDoc(usersCollectionRef, {
-        username: newName,
-        email: email1,
-        matricno: newMatNo,
-        phoneno: newPhone,
-        yearstudy: newStudy,
-        school: newSchool
-      });
-    } else {
-      // User already exists, handle accordingly (e.g., display an error message)
-      console.log("User already exists in the database");
+    if (!querySnapshot.empty) {
+      const participant = querySnapshot.docs[0].data();
+      const participantMatricNo = participant.participantMatricNo;
+      navigate(`/participantpage?eventid=${encodeURIComponent(eventId)}&matricno=${encodeURIComponent(participantMatricNo)}`);
     }
   };
 
+  const createUser = async (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    try {
+      await addDoc(usersCollectionRef, {
+        participantUsername: newName,
+        participantEmail: email1,
+        participantMatricNo: newMatNo,
+        participantPhoneNo: newPhone,
+        participantYear: newStudy,
+        participantSchool: newSchool,
+        eventID: eventId
+      });
+
+      navigate(`/participantpage?eventid=${encodeURIComponent(eventId)}&matricno=${encodeURIComponent(newMatNo)}`);
+    } catch (error) {
+      setError("Failed to create user. Please try again.");
+    }
+  };
+
+  
   return (
     <div className='container attendance p-3'>
         <blockquote className="mt-5 blockquote text-center">
@@ -45,6 +69,7 @@ function Attendance() {
             <h1 className="mt-5 mb=0">Welcome to MyEventOrg</h1>
             <footer>Please enter below details for your attendance record.</footer>
         </blockquote>
+        {error && <p className="text-danger">{error}</p>}
         <Form>
         <Form.Group className="mb-3">
             <Form.Label>Your Username</Form.Label>
@@ -194,12 +219,11 @@ function Attendance() {
             </Form.Select>
         </Form.Group>
         <p></p>
-        <Link to = '/participantpage'>
         <Button variant="primary" type="submit" onClick={createUser}> 
             Submit
         </Button>
-        </Link>
         </Form>
+        {error && <p>{error}</p>}
     </div>
   );
 }
