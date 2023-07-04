@@ -5,11 +5,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-function NavbarPart() {
+function NavbarPart(props) {
+  const participantMatricNo = props.participantMatricNo;
+  const eventId = props.eventId;
   return (
     <>
     {['lg'].map((expand) => (
       <Navbar key={expand} bg="light" expand={expand} >
+        
         <Container>
           <div className="d-flex align-items-center justify-content-between">
             <Navbar.Brand className="logo-container">
@@ -38,26 +41,20 @@ function NavbarPart() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link href="/chatting" className="border-bottom ">
-                  <h5>|Chat</h5>
+                <Nav.Link href={`/chatcommpart?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
+                  <h5>Chat</h5>
                 </Nav.Link>
-                <Nav.Link href="/quiz" className="border-bottom ">
-                  <h5>|Quiz</h5>
+                <Nav.Link href={`/pickquiz?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
+                  <h5>Quiz</h5>
                 </Nav.Link>
-                <Nav.Link href="/luckydraw" className="border-bottom ">
-                  <h5>|Lucky Draw</h5>
-                </Nav.Link>
-                <Nav.Link href="/livepoll" className="border-bottom ">
-                  <h5>|Live Poll</h5>
+                <Nav.Link href={`/playlivepoll?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
+                  <h5>Live Poll</h5>
                 </Nav.Link>
                 <Nav.Link href="/awardpage" className="border-bottom ">
-                  <h5>|Award Page </h5>
+                  <h5>Award Page </h5>
                 </Nav.Link>
-                <Nav.Link href="/livepoll" className="border-bottom ">
-                  <h5>| </h5>
-                </Nav.Link>
-                <Nav.Link href="/" className="border-bottom ">
-                  <h5>|Logout</h5>
+                <Nav.Link href={`/login?role=Participant&eventid=${eventId}`} className="border-bottom ">
+                  <h5>Logout</h5>
                 </Nav.Link>
               </Nav>
             </Offcanvas.Body>

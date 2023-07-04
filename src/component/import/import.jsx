@@ -2,6 +2,7 @@ import React from 'react';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
+
 const ImportDataFromJson = () => {
   const handleFileUpload = async (event) => {
     const files = event.target.files;
@@ -41,6 +42,7 @@ const ImportDataFromJson = () => {
   return (
     <div>
       <input type="file" accept=".json" multiple onChange={handleFileUpload} />
+      <button type="submit">Upload</button>
       {/* <button type="submit">Upload</button> */}
     </div>
   );
