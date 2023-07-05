@@ -1,131 +1,108 @@
-import React, { useState } from 'react';
-import { Button, Table, Form, Pagination } from 'react-bootstrap'; // Import Button and Table components from react-bootstrap
+import React, { useEffect, useState } from 'react';
+import { db } from '../../firebase';
+import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { collection, query, getDocs } from 'firebase/firestore';
 
 const VerifyVendor = () => {
-    const [admins, setadmins] = useState([
-        { id: 1, name: 'admin 1', price: 10, phonenum: 'phonenum1', selected: false, image: 'admin1' },
-        { id: 2, name: 'admin 2', price: 20, phonenum: 'phonenum2',  selected: false, image: 'admin2' },
-        { id: 3, name: 'admin 3', price: 30, phonenum: 'phonenum3',  selected: false, image: 'admin3' },
-        // Add more admin objects as needed
-      ]);
-    
-      // Pagination state
-      const [currentPage, setCurrentPage] = useState(1);
-      const [itemsPerPage, setItemsPerPage] = useState(20); // State for items per page
-    
-      // Calculate the index range for the current page
-      const indexOfLastItem = currentPage * itemsPerPage;
-      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      const currentItems = admins.slice(indexOfFirstItem, indexOfLastItem);
-    
-    
-    
-      // Function to handle individual admin selection
-      const handleadminSelect = (adminId) => {
-        const updatedadmins = admins.map((admin) => {
-          if (admin.id === adminId) {
-            return { ...admin, selected: !admin.selected };
-          }
-          return admin;
-        });
-        setadmins(updatedadmins);
-      };
+  const [vendors, setvendors] = useState([]);
+  const [selectedvendors, setSelectedvendors] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
-    
-      // Function to handle select all checkbox
-      const handleSelectAll = () => {
-        const updatedadmins = admins.map((admin) => ({
-          ...admin,
-          selected: !admin.selected,
+  useEffect(() => {
+    const fetchvendors = async () => {
+      try {
+        const q = query(collection(db, 'Vendorwaitinglist'));
+        const querySnapshot = await getDocs(q);
+        const fetchedvendors = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
         }));
-        setadmins(updatedadmins);
-      };
-    
-      // Function to handle input change for items per page
-      const handleItemsPerPageChange = (event) => {
-        const newItemsPerPage = parseInt(event.target.value, 10);
-        setItemsPerPage(newItemsPerPage);
-        setCurrentPage(1); // Reset to the first page when changing items per page
-      };
-    
-      // Pagination change page
-      const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-      };
-    
-      
-    
-    
-    
-    
-      return (
-        <div className='vendorpage'>
-          <h2>Verify Vendor</h2>
-          <Link to="/addnewadmin"><Button variant="secondary" className="add-admin-button">Add New Admin</Button></Link> {/* Add a button component */}
-          <Button variant="secondary" className="add-admin-button">Remove</Button> {/* Add a button component */}
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th><Form.Check
-                        type="checkbox"
-                        label=""
-                        checked={admins.every((admin) => admin.selected)}
-                        onChange={handleSelectAll}
-                        className="checkbox-select-all"
-                    />
-                </th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentItems.map((admin) => (
-                <tr key={admin.id}>
-                  <td>
-                    <Form.Check
-                      type="checkbox"
-                      checked={admin.selected}
-                      onChange={() => handleadminSelect(admin.id)}
-                    />
-                  </td>
-                  <td>{admin.image}</td>
-                  <td>{admin.name}</td>
-                  <td>{admin.price}</td>
-                  <td>{admin.phonenum}</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="5">
-                  Show
-                  <input
-                    type="number"
-                    min="1"
-                    value={itemsPerPage}
-                    onChange={handleItemsPerPageChange}
-                    onKeyPress={(event) => {
-                      if (event.key === 'Enter') {
-                        setCurrentPage(1);
-                      }
-                    }}
-                    className="items-per-page-input"
-                  />
-                  per page
-                  <Pagination className="pagination">
-                    <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
-                    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
-                    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastItem >= admins.length} />
-                    <Pagination.Last onClick={() => handlePageChange(Math.ceil(admins.length / itemsPerPage))} disabled={indexOfLastItem >= admins.length} />
-                  </Pagination>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </div>
-      );
+        setvendors(fetchedvendors);
+      } catch (error) {
+        console.log('Error fetching vendor application: ', error);
+      }
     };
+
+    fetchvendors();
+  }, []);
+
+  const handleCheckboxChange = (event, vendor) => {
+    const { checked } = event.target;
+    if (checked) {
+      setSelectedvendors((prevSelectedvendors) => [...prevSelectedvendors, vendor]);
+    } else {
+      setSelectedvendors((prevSelectedvendors) =>
+        prevSelectedvendors.filter((selectedvendor) => selectedvendor !== vendor)
+      );
+    }
+  };
+
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    if (!selectAll) {
+      // setSelectedvendors(vendors.filter((vendor) => vendor.role === 'Admin'));
+    } else {
+      setSelectedvendors([]);
+    }
+  };
+
+  return (
+    <div className='vendorpage'>
+      <h2>Verify Vendor</h2>
+      {/* <Link to='/addnewadmin'>
+        <Button variant='secondary' className='add-admin-button'>
+          Add New Admin
+        </Button>
+      </Link> */}
+      {/* <Button variant='secondary' className='add-admin-button'>
+        Remove
+      </Button> */}
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>
+              <input
+                type='checkbox'
+                checked={selectAll}
+                onChange={handleSelectAll}
+              />
+            </th>
+            <th>Business Username</th>
+            <th>Business Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Application Date</th>
+            <th>Comment</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vendors
+            // .filter((vendor) => vendor.role === 'Admin')
+            .map((vendor) => (
+              <tr key={vendor.id}>
+                <td>
+                  <input
+                    type='checkbox'
+                    checked={selectedvendors.includes(vendor)}
+                    onChange={(event) => handleCheckboxChange(event, vendor)}
+                  />
+                </td>
+                <td><Link to={`/verify/${vendor.id}/${encodeURIComponent(vendor.vendorusername)}`}>{vendor.vendorusername}</Link></td>
+                {/* <td>{vendor.vendorusername}</td> */}
+                <td>{vendor.businessname}</td>
+                <td>{vendor.vendoremail}</td>
+                <td>{vendor.vendoraddress}</td>
+                <td>{vendor.datecreated && vendor.datecreated.toDate().toLocaleString('en-MY', { timeZone: 'Asia/Kuala_Lumpur' })}</td>
+                <td>{vendor.comment}</td>
+                <td>{vendor.status}</td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+    </div>
+  );
+};
 
 export default VerifyVendor;

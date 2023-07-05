@@ -49,6 +49,10 @@ function LoginPage() {
 
       // User login successful
       setError('');
+      
+      // Save session ID in sessionStorage or localStorage
+      sessionStorage.setItem('sessionId', userDoc.id);
+      sessionStorage.setItem('sessionUsername', userDoc.data().username);
 
       switch (userRole) {
         case 'Admin':

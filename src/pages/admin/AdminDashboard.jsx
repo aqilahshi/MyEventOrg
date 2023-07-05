@@ -12,10 +12,32 @@ const AdminDashboard = () => {
 
   // Sample data for the charts (replace with your actual data)
   const dailyChartData = {
+    labels: ['12.00AM', '6:00AM', '12:00PM', '6:00PM', '12.00AM'],
+    datasets: [
+        {
+          label: 'Order Shipped',
+          data: [4, 2, 1, 2, 0, 1],
+          backgroundColor: 'rgba(0, 150, 255, 0.1)',
+          borderColor: 'rgba(0, 150, 255, 1)',
+          borderWidth: 1,
+          fill: true,
+        },
+        {
+            label: 'Sales',
+            data: [5, 0, 2, 2, 0, 1],
+            backgroundColor: 'rgb(255, 0, 73, 0.1)',
+            borderColor: 'rgba(255, 0, 109, 1)',
+            borderWidth: 1,
+            fill: true,
+          },
+      ],
+  };
+
+  const weeklyChartData = {
     labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
     datasets: [
         {
-          label: 'Salesswqdwq',
+          label: 'Order Shipped',
           data: [10, 2, 10, 5, 20, 0, 15],
           backgroundColor: 'rgba(0, 150, 255, 0.1)',
           borderColor: 'rgba(0, 150, 255, 1)',
@@ -31,21 +53,6 @@ const AdminDashboard = () => {
             fill: true,
           },
       ],
-  };
-
-  const weeklyChartData = {
-    // Weekly chart data
-    labels: ['l', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-    datasets: [
-      {
-        label: 'Sales',
-        data: [111, 12, 19, 3, 5, 2, 3, 10],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        fill: false,
-      },
-    ],
   };
 
   const monthlyChartData = {
@@ -196,11 +203,44 @@ const AdminDashboard = () => {
     ],
   };
 
-  const doughnutdata = {
-    labels: ['Red', 'Blue', 'Yellow'],
+  const doughnutdata1 = {
+    labels: ['Total Vendor', 'Removed Vendor', 'Total Admin'],
     datasets: [
       {
         data: [300, 50, 100],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      },
+    ],
+  };
+
+  const doughnutdata = {
+    labels: ['Sales', 'Profit', 'Quantity Sold'],
+    datasets: [
+      {
+        data: [80, 50, 90],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      },
+    ],
+  };
+
+  const doughnutdata2 = {
+    labels: ['Sales', 'Profit', 'Quantity Sold'],
+    datasets: [
+      {
+        data: [8, 5, 3],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      },
+    ],
+  };
+
+  const doughnutdata3 = {
+    labels: ['Sales', 'Profit', 'Quantity Sold'],
+    datasets: [
+      {
+        data: [4, 2, 10],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
       },
@@ -218,7 +258,7 @@ const AdminDashboard = () => {
         borderWidth: 1,
       },
       {
-        label: 'sdjf',
+        label: 'Quantity Sold',
         data: [18, 2, 18, 9, 1, 4],
         backgroundColor: '#FF6384',
         borderColor: '#FF6384',
@@ -251,7 +291,7 @@ const AdminDashboard = () => {
               <Card className="shadow expandable-card" style={{ height: '310px'}}>
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center mb-3">
-                    <Card.Title>{`${chartType.charAt(0).toUpperCase() + chartType.slice(1)} Sales`}</Card.Title>
+                    <Card.Title>Vendor {`${chartType.charAt(0).toUpperCase() + chartType.slice(1)} Sales`}</Card.Title>
                     <ButtonGroup>
                       <Button variant="secondary" size="sm" onClick={() => handleChartTypeChange('daily')} active={chartType === 'daily'}>
                         Daily
@@ -280,8 +320,8 @@ const AdminDashboard = () => {
                 <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '14px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
-                      <Card.Title>hgjghohuohgiyghhh</Card.Title>
-                      <h6>RM23ddgxgxgxhxhvjvhvhjv45</h6>
+                      <Card.Title>Average Vendor Sales</Card.Title>
+                      <h6>RM29/month</h6>
                     </div>
                     <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', zIndex: '1' }}>
                       <div style={{ maxWidth: '60%', minWidth: '50px'}}>
@@ -298,8 +338,8 @@ const AdminDashboard = () => {
                 <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '12px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
-                      <Card.Title>hgjghohuohgiyghhh</Card.Title>
-                      <h6>RM23ddgxgxgxhxhvjvhvhjv45</h6>
+                      <Card.Title>Average Shipped Item</Card.Title>
+                      <h6>21/day</h6>
                     </div>
                     <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', zIndex: '1' }}>
                     <div style={{ maxWidth: '60%', minWidth: '50px'}}>
@@ -316,8 +356,8 @@ const AdminDashboard = () => {
                 <Card className="shadow expandable-card" style={{ height: '95px', marginTop: '13px' }}>
                   <Card.Body style={{ display: 'flex', alignItems: 'center', padding: 0, position: 'relative' }}>
                     <div style={{ position: 'absolute', top: 10 }}>
-                      <Card.Title>hgjghohuohgiyghhh</Card.Title>
-                      <h6>RM23ddgxgxgxhxhvjvhvhjv45</h6>
+                      <Card.Title>Total Sales</Card.Title>
+                      <h6>RM2514.30</h6>
                     </div>
                     <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', zIndex: '1' }}>
                     <div style={{ maxWidth: '60%', minWidth: '50px'}}>
@@ -334,14 +374,14 @@ const AdminDashboard = () => {
               <Card className="shadow expandable-card" style={{ height: '310px'}}>
                   <Card.Body>
                     <div style={{ backgroundColor: 'lightblue', padding: '10px' }}>
-                      <h6>Dummy Curve Line Graph 3</h6>
-                      <h6>Dummy Curve Line Graph 3</h6>
-                      <h6>Dummy Curve Line Graph 3</h6>
+                      <h6>Admin Faisal approved a vendor.</h6>
+                      {/* <h6>Dummy Curve Line Graph 3</h6>
+                      <h6>Dummy Curve Line Graph 3</h6> */}
                     </div>
                     <div style={{ flex: 2 }}>
-                      <h6>Dummy Curve Line Graph 3</h6>
-                      <h6>Dummy Curve Line Graph 3</h6>
-                      <h6>Dummy Curve Line Graph 3</h6>
+                      <h6>MyShop4 request a vendor application.</h6>
+                      <h6>ArtsGalleria request a vendor application.</h6>
+                      <h6>KateTaki request a vendor application.</h6>
                     </div>
                   </Card.Body>
                 </Card>
@@ -364,33 +404,34 @@ const AdminDashboard = () => {
             <Col style={{ maxWidth: '37%'}}>
             <Card className="shadow expandable-card" style={{ height: '340px'}}>
                   <Card.Body>
+                  <Card.Title>Vendor Application</Card.Title>
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>Category Name</th>
+                    <th>Business Username</th>
+                    <th>Business Name</th>
+                    <th>Comment</th>
                     <th>Status</th>
-                    <th>Include In Menu</th>
-                    <th>Include In Menu</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
+                    <td>	MyShop4</td>
+                    <td>MyEventOrgTrial</td>
+                    <td>Information is clear.</td>
+                    <td>Approved</td>
                   </tr>
                   <tr>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
+                    <td>ArtsGalleria</td>
+                    <td>ArtsGalleria</td>
+                    <td></td>
+                    <td>Pending</td>
                   </tr>
                   <tr>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
-                    <td>Show per page</td>
+                    <td>KateTaki</td>
+                    <td>KateTaki</td>
+                    <td></td>
+                    <td>Pending</td>
                   </tr>
                 </tbody>
               </Table>
@@ -402,7 +443,7 @@ const AdminDashboard = () => {
             <Col style={{ maxWidth: '25%'}}>
               <Card className="shadow  expandable-card" style={{ height: '340px'}}>
                   <Card.Body>
-                    <Doughnut data={doughnutdata} />
+                    <Doughnut data={doughnutdata1} />
                   </Card.Body>
                 </Card>
             </Col>
@@ -413,21 +454,22 @@ const AdminDashboard = () => {
                 <Row>
                 <Card className="shadow  expandable-card" style={{ height: '128px' }}>
                   <Card.Body style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ width: '20%' }}>
+                  <Card.Title>Top Vendor Sales</Card.Title>
+                  <div style={{ width: '20%' }}>
                       <Doughnut data={doughnutdata} />
                     </div>
                     <div style={{ width: '20%' }}>
-                      <Doughnut data={doughnutdata} />
+                      <Doughnut data={doughnutdata2} />
                     </div>
                     <div style={{ width: '20%' }}>
-                      <Doughnut data={doughnutdata} />
+                      <Doughnut data={doughnutdata3} />
                     </div>
-                    <div style={{ width: '20%' }}>
-                      <Doughnut data={doughnutdata} />
-                    </div>
-                    <div style={{ width: '20%' }}>
-                      <Doughnut data={doughnutdata} />
-                    </div>
+                    {/* <div style={{ width: '20%' }}>
+                      <Doughnut data={doughnutdata1} />
+                    </div> */}
+                    {/* <div style={{ width: '20%' }}>
+                      <Doughnut data={doughnutdata3} />
+                    </div> */}
                   </Card.Body>
                 </Card>
                 </Row>

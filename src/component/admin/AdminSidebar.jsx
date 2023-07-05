@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { FaHome, FaBoxOpen, FaPaperclip, FaHashtag, FaTag, FaBox, FaUsers } from "react-icons/fa";
 import "../../pages/admin/Admin.css";
 
 
 const AdminSidebar = ({ children }) => {
+  useEffect(() => {
+    // Retrieve session ID from sessionStorage
+    const sessionId = sessionStorage.getItem('sessionId');
+    const sessionUsername = sessionStorage.getItem('sessionUsername');
+
+    // Do something with the session ID
+    console.log('Session ID:', sessionId);
+    console.log('Session Username:', sessionUsername);
+  }, []);
+  
+  
   const menuItems = [
     {
       category: 'QUICK LINKS',

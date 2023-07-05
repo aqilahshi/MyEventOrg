@@ -171,3 +171,8 @@ h7{
   font-size: 16px;
   font-weight: bold;
 }
+
+.preview {
+  width: 100px;
+  height: 100px;
+}
