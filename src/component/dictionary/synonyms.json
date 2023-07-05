@@ -1,0 +1,6 @@
+{
+    "tuala": ["towel", "terrycloth", "bath linen"],
+    "terrycloth": ["towel", "tuala", "bath linen"],
+    "bath linen": ["towel", "tuala", "terrycloth"]
+  }
+  

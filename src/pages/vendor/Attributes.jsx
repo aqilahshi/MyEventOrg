@@ -77,7 +77,7 @@ const Attributes = () => {
 
   return (
     <div className="vendorpage">
-      <h2>Attributes</h2>
+      <h2>Specification</h2>
       <Link to="/newAttribute"><Button variant="primary" className="add-Attribute-button">New Attribute</Button></Link>
       <Link to="" ><Button variant="primary" className="add-Attribute-button">Delete</Button></Link>
       

@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect  } from 'react';
 import { FaHome, FaBoxOpen, FaPaperclip, FaHashtag, FaTag, FaBox, FaUsers } from "react-icons/fa";
 import "../../pages/vendor/Vendor.css";
 // import VendorDashboard from "../../pages/vendor/VendorDashboard";
 
 
 const VendorSidebar = ({ children }) => {
+  useEffect(() => {
+    // Retrieve session ID from sessionStorage
+    const sessionId = sessionStorage.getItem('sessionId');
+    const sessionUsername = sessionStorage.getItem('sessionUsername');
+
+    // Do something with the session ID
+    console.log('Session ID:', sessionId);
+    console.log('Session Username:', sessionUsername);
+  }, []);
+  
   const menuItems = [
     {
       category: 'QUICK LINKS',
@@ -16,10 +26,10 @@ const VendorSidebar = ({ children }) => {
     {
       category: 'CATALOG',
       items: [
-        { label: 'Products', link: '/products', icon: <FaBoxOpen /> },
+        { label: 'Products', link: '/listproducts', icon: <FaBoxOpen /> },
         { label: 'Categories', link: '/categories', icon: <FaPaperclip /> },
         { label: 'Collections', link: '/collections', icon: <FaTag /> },
-        { label: 'Attributes', link: '/attributes', icon: <FaHashtag /> }
+        { label: 'Specification', link: '/attributes', icon: <FaHashtag /> }
       ]
     },
     {

@@ -20,12 +20,19 @@
 
   .card {
     width: 100%;
-    border: 1px solid #000000;
     border-radius: 4px;
     padding: 0px;
-    /* background-color: #282525; */
+    background-color: #282525;
     margin: 14px 0px 0px 0px;
+    box-shadow: #000000;
   }
 
-
+  .expandable-card {
+    transition: transform 0.3s ease;
+    z-index: 1; /* Set a higher z-index value */
+  }
   
+  .expandable-card:hover {
+    transform: scale(1.1);
+    z-index: 2; /* Set an even higher z-index value when expanded */
+  }

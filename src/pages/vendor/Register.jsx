@@ -5,7 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from "react";
 import { db } from '../../firebase';
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, serverTimestamp  } from "firebase/firestore";
 import { Link } from 'react-router-dom';
 // import VendorSidebar from '../../component/vendor/Sidebar';
 
@@ -13,19 +13,34 @@ import { Link } from 'react-router-dom';
 import "./Vendor.css"; // Import custom CSS file for additional styling
 
 const Register = () => {
-  const [Status, setStatus] = useState("Enabled");
-  const [Visibility, setVisibility] = useState("Visible");
-  const [MStock, setMStock] = useState("Yes");
-  const [SAvailability, setSAvailability] = useState("Yes");
+  const [vendorfname, setVendorFirstname] = useState("");
+  const [vendorlname, setVendorLastname] = useState("");
+  const [businessname, setBusinessName] = useState("");
+  const [businessdesc, setBusinessDesc] = useState("");
+  const [vendorusername, setvendorusername] = useState("");
+  const [vendorpassword, setvendorpassword] = useState("");
+  const [vendoremail, setvendoremail] = useState("");
+  const [vendoraddress, setvendoraddress] = useState("");
+  const [vendorphone, setvendorphone] = useState("");
 
-  const [vendorname, setVendorName] = useState("");
+
 
   const Submit = async (y) => {
     y.preventDefault();
 
     try {
-      const docRef = await addDoc(collection(db, "vendor"), {
-        vendorname: vendorname,
+      const docRef = await addDoc(collection(db, "Vendorwaitinglist"), {
+        vendorusername: vendorusername,
+        vendorfname: vendorfname,
+        vendorlname: vendorlname,
+        businessname: businessname,
+        businessdesc: businessdesc,
+        vendorpassword: vendorpassword,
+        vendoremail: vendoremail,
+        vendoraddress: vendoraddress,
+        vendorphone: vendorphone,
+        datecreated: serverTimestamp(),
+        status: 'Pending'
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (y) {
@@ -37,7 +52,7 @@ const Register = () => {
 
   const fetchPost = async () => {
 
-    await getDocs(collection(db, "vendor"))
+    await getDocs(collection(db, "User"))
       .then((querySnapshot) => {
         const newData = querySnapshot.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -52,78 +67,127 @@ const Register = () => {
   }, []);
 
 
-  const onOptionChange = e => {
-    setStatus(e.target.value);
-  };
-
-  const [currentFile, setFile] = React.useState();
-  const [previewImage, setPreview] = React.useState();
-  const [success, setSuccess] = React.useState(false);
-
-  const selectFile = function (e) {
-    setFile(e.target.files[0]);
-
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const submit2 = function () {
-    let fd = new FormData();
-
-    fd.append("file", currentFile);
-
-    let request = new XMLHttpRequest();
-
-    request.onreadystatechange = function (state) {
-      if (
-        state.originalTarget.readyState === 4 &&
-        state.originalTarget.status === 200
-      ) {
-        setSuccess(true);
-      }
-    };
-
-    request.open(
-      "POST",
-      "https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload",
-      true
-    );
-    request.send(fd);
-  };
   
-
   return (
-      <div className="register-container">
-        <h1>Register New Account</h1>
+      <div className="vendorpage">
+        <br/><h2>Register New Account</h2>
         <div className="form-section">
           <div>
-            <h5>Vendor Details</h5>
+          <br/><h5>Vendor Details</h5>
               <Form onSubmit={Submit}>
                 
-                <Row className="mb-3">
-                  <Form.Group as={Col} controlId="vendorname">
-                    <Form.Label>Vendor Name</Form.Label>
+              <Row className="mb-3">
+                  <Form.Group as={Col} controlId="vendorfname">
+                    <Form.Label>Vendor Firstname</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter vendor name"
-                      onChange={(e) => setVendorName(e.target.value)}
-                      value={vendorname}
+                      placeholder=""
+                      onChange={(e) => setVendorFirstname(e.target.value)}
+                      value={vendorfname}
+                    />
+                  </Form.Group>
+                
+                  <Form.Group as={Col} controlId="vendorlname">
+                    <Form.Label>Vendor Lastname</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setVendorLastname(e.target.value)}
+                      value={vendorlname}
+                    />
+                  </Form.Group>
+                </Row>
+                
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="businessname">
+                    <Form.Label>Business Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setBusinessName(e.target.value)}
+                      value={businessname}
+                    />
+                  </Form.Group>
+                </Row>
+
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="businessdesc">
+                    <Form.Label>Business Desription</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setBusinessDesc(e.target.value)}
+                      value={businessdesc}
+                    />
+                  </Form.Group>
+                </Row>
+
+                <br/><h5>Account Contact</h5>
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="vendorphone">
+                    <Form.Label>Business Phone Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setvendorphone(e.target.value)}
+                      value={vendorphone}
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="vendoremail">
+                    <Form.Label>Business Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder=""
+                      onChange={(e) => setvendoremail(e.target.value)}
+                      value={vendoremail}
                     />
                   </Form.Group>
                 </Row>
 
                 <Row className="mb-3">
-                  <Form.Group as={Col} controlId="vendorname">
-                    <Form.Label>Vendor Name</Form.Label>
+                  <Form.Group as={Col} controlId="vendoraddress">
+                    <Form.Label>Business Address</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter vendor name"
-                      onChange={(e) => setVendorName(e.target.value)}
-                      value={vendorname}
+                      placeholder=""
+                      onChange={(e) => setvendoraddress(e.target.value)}
+                      value={vendoraddress}
+                    />
+                  </Form.Group>
+                </Row>
+
+
+                <br/><h5>Account Setup</h5>
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="vendorusername">
+                    <Form.Label>Business Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setvendorusername(e.target.value)}
+                      value={vendorusername}
+                    />
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="vendorpassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder=""
+                      // onChange={(e) => setvendorpassword(e.target.value)}
+                      value={vendorpassword}
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="vendorpassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder=""
+                      onChange={(e) => setvendorpassword(e.target.value)}
+                      value={vendorpassword}
                     />
                   </Form.Group>
                 </Row>

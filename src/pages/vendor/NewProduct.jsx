@@ -1,120 +1,138 @@
-import React from 'react';
+// add timestamp in db
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Row, Col } from 'react-bootstrap';
-import { useState, useEffect } from "react";
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import Image from 'react-bootstrap/Image';
+import { updateDoc, doc } from "firebase/firestore";
+
 
 import "./Vendor.css"; // Import custom CSS file for additional styling
 
 const CreatePost = () => {
-  const [Status, setStatus] = useState("Enabled");
-  const [Visibility, setVisibility] = useState("Visible");
-  const [MStock, setMStock] = useState("Yes");
-  const [SAvailability, setSAvailability] = useState("Yes");
+  const [sessionId, setSessionId] = useState('');
+  const [sessionUsername, setSessionUsername] = useState('');
+  
+  useEffect(() => {
+    // Retrieve session ID from sessionStorage
+    const sessionId = sessionStorage.getItem('sessionId');
+    setSessionId(sessionId);
+    const sessionUsername = sessionStorage.getItem('sessionUsername');
+    setSessionUsername(sessionUsername);
+    
+    
+    // Do something with the session ID
+    console.log('Session ID:', sessionId);
+    console.log('Session Username:', sessionUsername);
+  }, []);
 
+  const [visibility, setVisibility] = useState("Visible");
   const [productname, setProductName] = useState("");
   const [productdesc, setProductDesc] = useState("");
   const [productprice, setProductPrice] = useState("");
-  const [producttype, setProductType] = useState("");
+  const [productcategory, setproductcategory] = useState("");
   const [productquantity, setProductQuantity] = useState("");
+  const [productspecification, setSpecification] = useState("");
+  const [productcollection, setCollection] = useState("");
 
-  const Submit = async (y) => {
-    y.preventDefault();
+  const [files, setFiles] = useState([]); // Store an array of files
+  const [downloadURLs, setDownloadURLs] = useState([]); // Store an array of download URLs
+  const [previewImages, setPreviewImages] = useState([]);
 
-    try {
-      const docRef = await addDoc(collection(db, "Product"), {
-        productname: productname,
-        productdesc: productdesc,
-        productprice: productprice,
-        producttype: producttype,
-        productquantity: productquantity,
-        Status: Status,
-        Visibility: Visibility,
-        MStock: MStock,
-        SAvailability: SAvailability,
+
+  // const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  // const [downloadURL, setDownloadURL] = useState('');
+  // const [previewImage, setPreview] = useState();
+  const [success, setSuccess] = useState(false);
+
+  const handleFileChange = (e) => {
+  const selectedFiles = Array.from(e.target.files); // Convert FileList to an array
+  const newFiles = selectedFiles.slice(0, 10); // Limit the number of files to 10
+
+  setFiles(newFiles);
+
+  // Create an array of promises to get the preview URLs for the selected files
+  const previewURLs = newFiles.map((file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  });
+
+  // Resolve all promises to get the preview URLs
+  Promise.all(previewURLs).then((results) => {
+    setPreviewImages(results); // Update the state with the preview URLs
+  });
+};
+
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const docRef = await addDoc(collection(db, "Product"), {
+      vendorID: sessionId,
+      vendorUsername: sessionUsername,
+      productname: productname,
+      productdesc: productdesc,
+      productprice: productprice,
+      productcategory: productcategory,
+      productquantity: productquantity,
+      visibility: visibility,
+      productspecification: productspecification,
+      productcollection: productcollection
+    });
+
+    const uploadPromises = files.map((file) => {
+      return new Promise(async (resolve) => {
+        // Create a storage reference
+        const storageRef = ref(
+          storage,
+          `productimg/${sessionId}/${docRef.id}/${file.name}`
+        );
+
+        // Upload file to Firebase Storage
+        await uploadBytes(storageRef, file);
+
+        // Get the download URL for the file
+        const downloadURL = await getDownloadURL(storageRef);
+
+        resolve(downloadURL);
       });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (y) {
-      console.error("Error adding document: ", y);
-    }
-  };
+    });
 
-  const [todos, setTodos] = useState([]);
+    const downloadedURLs = await Promise.all(uploadPromises);
 
-  const fetchPost = async () => {
+    await updateDoc(doc(db, "Product", docRef.id), {
+      downloadURLs: downloadedURLs
+    });
 
-    await getDocs(collection(db, "Product"))
-      .then((querySnapshot) => {
-        const newData = querySnapshot.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }));
-        setTodos(newData);
-        console.log(todos, newData);
-      })
+    setDownloadURLs(downloadedURLs);
 
+    console.log("Document written with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  } finally {
+    setUploading(false);
   }
-
-  useEffect(() => {
-    fetchPost();
-  }, []);
+};
 
 
-  const onOptionChange = e => {
-    setStatus(e.target.value);
-  };
+  
 
-  const onOptionChange2 = f => {
-    setVisibility(f.target.value);
-  };
-
-  const onOptionChange3 = g => {
-    setMStock(g.target.value);
-  };
-
-  const onOptionChange4 = h => {
-    setSAvailability(h.target.value);
-  };
-
-  const [currentFile, setFile] = React.useState();
-  const [previewImage, setPreview] = React.useState();
-  const [success, setSuccess] = React.useState(false);
-
-  const selectFile = function (e) {
-    setFile(e.target.files[0]);
-
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const submit2 = function () {
-    let fd = new FormData();
-
-    fd.append("file", currentFile);
-
-    let request = new XMLHttpRequest();
-
-    request.onreadystatechange = function (state) {
-      if (
-        state.originalTarget.readyState === 4 &&
-        state.originalTarget.status === 200
-      ) {
-        setSuccess(true);
-      }
-    };
-
-    request.open(
-      "POST",
-      "https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload",
-      true
-    );
-    request.send(fd);
+  const onOptionChange2 = (e) => {
+    setVisibility(e.target.value);
   };
 
   return (
@@ -123,7 +141,7 @@ const CreatePost = () => {
       <div className="form-section">
         <div>
           <h5>Product Details</h5>
-          <Form onSubmit={Submit}>
+          <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="productname">
                 <Form.Label>Product Name</Form.Label>
@@ -135,6 +153,7 @@ const CreatePost = () => {
                 />
               </Form.Group>
             </Row>
+
             <Row className="mb-3">
               <Form.Group as={Col} controlId="productdesc">
                 <Form.Label>Product Description</Form.Label>
@@ -158,13 +177,35 @@ const CreatePost = () => {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="producttype">
-                <Form.Label>Product Type</Form.Label>
+              <Form.Group as={Col} controlId="productcategory">
+                <Form.Label>Product Category</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter product type"
-                  onChange={(e) => setProductType(e.target.value)}
-                  value={producttype}
+                  placeholder="Enter product category"
+                  onChange={(e) => setproductcategory(e.target.value)}
+                  value={productcategory}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="productcollection">
+                <Form.Label>Product Collection</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter product collection"
+                  onChange={(e) => setCollection(e.target.value)}
+                  value={productcollection}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="productspecification">
+                <Form.Label>Product Specification</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter product specification"
+                  onChange={(e) => setSpecification(e.target.value)}
+                  value={productspecification}
                 />
               </Form.Group>
             </Row>
@@ -179,27 +220,7 @@ const CreatePost = () => {
                 />
               </Form.Group>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="status">
-                <Form.Label>Status</Form.Label>
-                <Form.Check
-                  type="radio"
-                  name="status"
-                  value="Enabled"
-                  label="Enabled"
-                  checked={Status === 'Enabled'}
-                  onChange={onOptionChange}
-                />
-                <Form.Check
-                  type="radio"
-                  name="status"
-                  value="Disabled"
-                  label="Disabled"
-                  checked={Status === 'Disabled'}
-                  onChange={onOptionChange}
-                />
-              </Form.Group>
-            </Row>
+
             <Row className="mb-3">
               <Form.Group as={Col} controlId="visibility">
                 <Form.Label>Visibility</Form.Label>
@@ -208,7 +229,7 @@ const CreatePost = () => {
                   name="visibility"
                   value="Visible"
                   label="Visible"
-                  checked={Visibility === 'Visible'}
+                  checked={visibility === 'Visible'}
                   onChange={onOptionChange2}
                 />
                 <Form.Check
@@ -216,79 +237,33 @@ const CreatePost = () => {
                   name="visibility"
                   value="Hidden"
                   label="Hidden"
-                  checked={Visibility === 'Hidden'}
+                  checked={visibility === 'Hidden'}
                   onChange={onOptionChange2}
                 />
               </Form.Group>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="mstock">
-                <Form.Label>Manage Stock</Form.Label>
-                <Form.Check
-                  type="radio"
-                  name="mstock"
-                  value="Yes"
-                  label="Yes"
-                  checked={MStock === 'Yes'}
-                  onChange={onOptionChange3}
-                />
-                <Form.Check
-                  type="radio"
-                  name="mstock"
-                  value="No"
-                  label="No"
-                  checked={MStock === 'No'}
-                  onChange={onOptionChange3}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="savailability">
-                <Form.Label>Stock Availability</Form.Label>
-                <Form.Check
-                  type="radio"
-                  name="savailability"
-                  value="Yes"
-                  label="Yes"
-                  checked={SAvailability === 'Yes'}
-                  onChange={onOptionChange4}
-                />
-                <Form.Check
-                  type="radio"
-                  name="savailability"
-                  value="No"
-                  label="No"
-                  checked={SAvailability === 'No'}
-                  onChange={onOptionChange4}
-                />
-              </Form.Group>
-            </Row>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Create Product</Button>
           </Form>
         </div>
         <div>
-          <h5>Upload Image</h5>
-          <InputGroup className="mb-3">
-            <Form.Control
-              type="file"
-              onChange={selectFile}
-            />
-          </InputGroup>
-          <Button onClick={submit2}>Upload</Button>
-          {success && <p>Image uploaded successfully!</p>}
-          {previewImage && (
-            <img src={previewImage} alt="Preview" className="preview-image" />
-          )}
-        </div>
+  <h5>Upload Images</h5>
+  <InputGroup className="mb-3">
+    <Form.Control
+      type="file"
+      accept="image/*"
+      multiple // Allow selecting multiple files
+      onChange={handleFileChange}
+    />
+  </InputGroup>
+  {previewImages.length > 0 && (
+    <div>
+      {previewImages.map((previewImage, index) => (
+        <img key={index} className="preview" src={previewImage} alt="" />
+      ))}
+    </div>
+  )}
+</div>
       </div>
-      {/* <h2>Products</h2>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <Link to={`/product/${todo.id}`}>{todo.productname}</Link>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 };
