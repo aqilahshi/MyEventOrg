@@ -25,7 +25,7 @@ function GenerateCommittee() {
         setShowCommitteeData(committeesData.length > 0);
       } catch (error) {
         console.error("Error fetching committees:", error);
-      }
+      }console.log(committees);
     };
 
     getCommittees();

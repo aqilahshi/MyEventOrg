@@ -80,7 +80,7 @@ function NavbarComm() {
               <h5>Award Announcement</h5>
             </Nav.Link> */}
             <Nav.Link as={Link} to="/" className={location.pathname === "/" ? "active" : ""} onClick={handleLinkClick}>
-              <h5>Sign Out</h5>
+              <h5>| Sign Out</h5>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

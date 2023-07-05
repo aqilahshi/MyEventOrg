@@ -108,6 +108,10 @@ function DetailsQuiz(){
   //   // Find the quiz card being edited
   //   const quizCard = quizCards.find((card) => card.id === quizId);
   
+  // const handleEditQuiz = async (quizId) => {
+  //   // Find the quiz card being edited
+  //   const quizCard = quizCards.find((card) => card.id === quizId);
+  
   //   if (quizCard) {
   //     // Set the values of the quiz being edited in the state variables
   //     setquestion(quizCard.quizQuestion);
