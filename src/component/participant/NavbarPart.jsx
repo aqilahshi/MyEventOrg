@@ -42,19 +42,19 @@ function NavbarPart(props) {
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href={`/chatcommpart?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
-                  <h5>Chat</h5>
+                  <h5>| Chat</h5>
                 </Nav.Link>
                 <Nav.Link href={`/pickquiz?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
-                  <h5>Quiz</h5>
+                  <h5>| Quiz</h5>
                 </Nav.Link>
                 <Nav.Link href={`/playlivepoll?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
-                  <h5>Live Poll</h5>
+                  <h5>| Live Poll</h5>
                 </Nav.Link>
-                <Nav.Link href="/awardpage" className="border-bottom ">
+                {/* <Nav.Link href="/awardpage" className="border-bottom ">
                   <h5>Award Page </h5>
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link href={`/login?role=Participant&eventid=${eventId}`} className="border-bottom ">
-                  <h5>Logout</h5>
+                  <h5>| Logout</h5>
                 </Nav.Link>
               </Nav>
             </Offcanvas.Body>

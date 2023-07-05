@@ -22,10 +22,10 @@ function GenerateCommittee() {
         const committeesData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         console.log("Fetched committees:", committeesData);
         setCommittees(committeesData);
-        setShowCommitteeData(committeesData.length === 1);
+        setShowCommitteeData(committeesData.length > 0);
       } catch (error) {
         console.error("Error fetching committees:", error);
-      }
+      }console.log(committees);
     };
 
     getCommittees();
