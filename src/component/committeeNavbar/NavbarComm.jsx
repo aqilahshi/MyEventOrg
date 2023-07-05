@@ -65,13 +65,13 @@ function NavbarComm() {
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} to={`/activity/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}`} className={location.pathname === `/activity/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}` ? "active" : ""} onClick={handleLinkClick}>
-              <h5>Activity</h5>
+              <h5>| Activity</h5>
             </Nav.Link>
             <Nav.Link as={Link} to={`/chatting/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}&committeeMatricNo=${encodeURIComponent(committeeMatricNo)}`} className={location.pathname === `/chatting/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}&committeeMatricNo=${encodeURIComponent(committeeMatricNo)}` ? "active" : ""} onClick={handleLinkClick}>
-              <h5>Chat</h5>
+              <h5>| Chat</h5>
             </Nav.Link> 
             <Nav.Link as={Link} to={`/generatemain/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}`} className={location.pathname === `/generatemain/?eventid=${eventId}&email=${encodeURIComponent(userEmail)}` ? "active" : ""} onClick={handleLinkClick}>
-              <h5>Generate</h5>
+              <h5>| Generate</h5>
             </Nav.Link>
             {/* <Nav.Link as={Link} to="/winner-lists" className={location.pathname === "/winner-lists" ? "active" : ""} onClick={handleLinkClick}>
               <h5>Winner Lists</h5>
