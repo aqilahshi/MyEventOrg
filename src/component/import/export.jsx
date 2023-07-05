@@ -10,6 +10,10 @@ const ExportDataToJson = () => {
       const tables = [
         { name: 'Participant', fileName: 'Participant.json' },
         { name: 'User', fileName: 'User.json' },
+        { name: 'CreateQuiz', fileName: 'CreateQuiz.json' },
+        { name: 'Quiz', fileName: 'Quiz.json' },
+        { name: 'EventDetails', fileName: 'EventDetails.json' },
+        { name: 'LivePoll', fileName: 'LivePoll.json' }
         { name: 'Todo', fileName: 'todo.json' },
         { name: 'CreateQuiz', fileName: 'CreateQuiz.json' },
         { name: 'User', fileName: 'Product.json' },

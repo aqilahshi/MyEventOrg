@@ -14,6 +14,7 @@
     "date-fns": "^2.30.0",
     "didyoumean": "^1.2.2",
     "firebase": "^9.22.1",
+    "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-chartjs-2": "^5.2.0",
@@ -23,8 +24,12 @@
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
+
     "string-similarity": "^4.0.4",
     "styled-components": "^5.3.10",
+
+    "universal-cookie": "^4.0.4",
+
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,21 +1,32 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import VendorPage from './component/login/VendorPage';
-import CommitteePage from './component/login/CommitteePage';
 import LecturersPage from './component/login/LecturersPage';
 import AdminPage from './component/login/AdminPage';
 import HomePage from './component/login/HomePage';
 import LoginPage from './component/login/LogIn';
 import './component/login/loginstyle.css';
+// import Export1 from './component/import/export';
+// import Import1 from './component/import/import';
+
+//start nad import
 import Attendance from './component/participant/Attendance';
 import ParticipantPage from './component/participant/ParticipantPage';
 import CreateQuiz from './component/activity/quiz/CreateQuiz';
 import DetailsQuiz from './component/activity/quiz/DetailsQuiz';
 import LuckyDrawAlgo from './component/activity/luckydraw/LuckyDrawAlgo';
-import ExportDatatable from './component/import/export';
-import ImportDatatable from './component/import/import';
 
-
+import BoxPage from './component/sub3/Box';
+import LivePollCreator from './component/activity/livepoll/LivePoll';
+import LivePollParticipant from './component/activity/livepoll/ParticipantLP';
+import ResultLP from './component/activity/livepoll/ResultLP';
+import Activity from './component/committeeNavbar/activity';
+import GenerateMain from './component/generate/GenerateMain';
+import GenerateAttendance from './component/generate/GenerateAttendance';
+import ParticipantPick from './component/activity/quiz/ParticipantPick';
+import ParticipantPlayQuiz from './component/activity/quiz/ParticipantQuiz';
+import ChatPartComm from './component/chatcommitteeparticipant/ChatPartComm'
+import GenerateCommittee from './component/generate/GenerateCommittee';
 
 // start kirah import
 import VendorSidebar from './component/vendor/VendorSidebar';
@@ -53,6 +64,7 @@ import ProductList from "./pages/ecommerce/ProductList";
 
 import { Navbar, Image } from 'react-bootstrap';
 import navbarlogoImage from './logo.png'; // Import your logo image file
+import ChatCommPart from './component/chatcommitteeparticipant/ChatCommPart';
 // end kirah import
 
 // start kirah part
@@ -125,7 +137,7 @@ const TopNavbar = () => {
       )
   );
 };
-// start kirah part
+// end kirah part
 
 const App = () => {
   return (
@@ -145,7 +157,7 @@ const App = () => {
           path="/vendor" element={<VendorPage/>}
         />
         <Route
-          path="/committee" element={<CommitteePage/>}
+          path="/committee" element={<BoxPage/>}
         />
         <Route
           path="/lecturers" element={<LecturersPage/>}
@@ -159,15 +171,26 @@ const App = () => {
             
         {/* Route Participants */}
           <Route path="/participantpage" element={<ParticipantPage/>}/>
-            
+          <Route path="/playlivepoll" element={<LivePollParticipant/>}/>
+          <Route path="/resultlivepoll" element={<ResultLP />}/>
+          <Route path="/pickquiz" element={<ParticipantPick />}/>
+          <Route path="/playquiz/:eventId/:quizId/:participantMatricNo" element={<ParticipantPlayQuiz />}/>
+          <Route path="/chatcommpart" element={<ChatCommPart />}/>
+          
         {/* Route Committee Both Lecturer n Committee*/} 
             {/* Route Lecturer */}
             {/* Route Student */}
-          <Route path="/activity" element={<CommitteePage />} />
+          <Route path="/activity" element={<Activity />} />  
           <Route path="/createquiz" element={<CreateQuiz />} />
           <Route path="/createquizdetails" element={<DetailsQuiz />} />
-          <Route path="/createquiz/createquizdetails" element={<DetailsQuiz />} />
+          <Route path="/createquiz" element={<DetailsQuiz />} />
           <Route path="/createluckydraw" element={<LuckyDrawAlgo />} />
+          <Route path="/createlivepoll" element={<LivePollCreator />} />
+          <Route path="/generatemain" element={<GenerateMain />} />
+          <Route path="/generateattendance" element={<GenerateAttendance />} />
+          <Route path="/generatecommittee" element={<GenerateCommittee />} />
+          <Route path="/chatting" element={<ChatPartComm />} />
+          
           {/* Route Admin */}
           {/* Route Vendor */}
 
