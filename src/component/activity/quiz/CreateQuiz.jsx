@@ -22,27 +22,11 @@ function CreateQuiz() {
   const [quiz, setQuiz] = useState([]);
   const shareLink = `http://localhost:3000/login?role=Participant&eventid=${eventId}`; // Added 'shareLink' constant
   console.log("useremail", userEmail);
-  useEffect(() => {
-    const fetchCreateQuiz = async () => {
-      const CreateQuizCollectionRef = collection(db, 'CreateQuiz');
-      const eventDetailsSnapshot = await getDocs(CreateQuizCollectionRef);
-
-      const QuizData = eventDetailsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      setQuiz(QuizData);
-    };
-
-    fetchCreateQuiz();
-  }, []);
-  
   const [show, setShow] = useState(false);
   const [quizTitle, setQuizTitle] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
   const [quizCards, setQuizCards] = useState([]);
-  const quizzesCollectionRef = collection(db, "CreateQuiz");
+  const quizzesCollectionRef = collection(db, 'CreateQuiz');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -51,22 +35,44 @@ function CreateQuiz() {
     // Fetch existing quiz data from the database
     const fetchQuizzes = async () => {
       const querySnapshot = await getDocs(quizzesCollectionRef);
-      const quizzesData = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        quizzesData.push({
-          id: doc.id,
-          title: data.quizTitle,
-          description: data.quizDescription,
-          
-          // Add other quiz data fields as needed
-        });
-      });
-      setQuizCards(quizzesData);
+  
+      const QuizData = querySnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((quiz) => quiz.eventID === eventId);
+  
+      console.log('Quiz Data:', QuizData); // Add this line to log the QuizData
+  
+      if (QuizData.length > 0) {
+        setQuizCards(QuizData);
+      } else {
+        console.log(`No quiz data found for eventID: ${eventId}`);
+      }
     };
 
     fetchQuizzes();
-  }, []);
+  }, [eventId]);
+
+  useEffect(() => {
+    const fetchCreateQuiz = async () => {
+      const CreateQuizCollectionRef = collection(db, 'CreateQuiz');
+      const querySnapshot = await getDocs(CreateQuizCollectionRef);
+  
+      const QuizData = querySnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((quiz) => quiz.eventID === eventId);
+  
+      console.log('Quiz Data:', QuizData); // Add this line to log the QuizData
+  
+      if (QuizData.length > 0) {
+        setQuizCards(QuizData);
+      } else {
+        console.log(`No quiz data found for eventID: ${eventId}`);
+      }
+    };
+  
+    fetchCreateQuiz();
+  }, [eventId]);
+  
 
   // QUIZCREATE
   const handleCreateQuiz = async () => {
@@ -231,10 +237,10 @@ function CreateQuiz() {
             <Col key={quiz.id} className="d-flex justify-content-center">
               <Card style={{ width: '18rem' }} >
                 <Card.Body>
-                  <Card.Title>{quiz.title}</Card.Title>
+                  <Card.Title>{quiz.quizTitle}</Card.Title>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroup.Item>Description: {quiz.description}</ListGroup.Item>
+                  <ListGroup.Item>Description: {quiz.quizDescription}</ListGroup.Item>
                   {/* <ListGroup.Item>Question Total: {quiz.length}</ListGroup.Item> */}
                 </ListGroup>
                 <Card.Body>

@@ -88,26 +88,67 @@ function DetailsQuiz(){
 
   const handleDeleteQuiz = async (quizId) => {
     if (window.confirm("Are you sure you want to delete this quiz?")) {
-      await deleteDoc(doc(quizzesCollectionRef, quizId));
+      // await deleteDoc(doc(quizzesCollectionRef, quizId));
+
+      // Delete the corresponding data in the "Quiz" table
+      const quizTableRef = collection(db, "Quiz");
+      const querySnapshot = await getDocs(query(quizTableRef, where("id", "==", quizId)));
+      querySnapshot.forEach((doc) => {
+        deleteDoc(doc.ref);
       console.log("Quiz deleted successfully!");
+
+      });
+
       // Update the quiz cards after deleting the quiz
       setQuizCards(prevCards => prevCards.filter((card) => card.id !== quizId));
     }
   };
-  const handleEditQuiz = async (quizId) => {
-    // Find the quiz card being edited
-    const quizCard = quizCards.find((card) => card.id === quizId);
   
-    if (quizCard) {
-      // Set the values of the quiz being edited in the state variables
-      setquestion(quizCard.quizQuestion);
-      setoption1(quizCard.quizOption1);
-      setoption2(quizCard.quizOption2);
-      setoption3(quizCard.quizOption3);
-      setoption4(quizCard.quizOption4);
-      setanswer(quizCard.quizCorrectAns);
-      setEditingQuizId(quizId); // Set the editingQuizId to the id of the quiz being edited
-      setShow(true); // Open the modal for editing the quiz
+  // const handleEditQuiz = async (quizId) => {
+  //   // Find the quiz card being edited
+  //   const quizCard = quizCards.find((card) => card.id === quizId);
+  
+  //   if (quizCard) {
+  //     // Set the values of the quiz being edited in the state variables
+  //     setquestion(quizCard.quizQuestion);
+  //     setoption1(quizCard.quizOption1);
+  //     setoption2(quizCard.quizOption2);
+  //     setoption3(quizCard.quizOption3);
+  //     setoption4(quizCard.quizOption4);
+  //     setanswer(quizCard.quizCorrectAns);
+  //     setEditingQuizId(quizId); // Set the editingQuizId to the id of the quiz being edited
+  //     setShow(true); // Open the modal for editing the quiz
+  //   }
+  // };
+  const handleEditQuiz = async (quizId) => {
+    // Create a query to find the quiz card with the specified ID
+    const quizTableRef = collection(db, "Quiz");
+    const q = query(quizTableRef, where("id", "==", quizId));
+  
+    try {
+      // Execute the query and get the matching documents
+      const querySnapshot = await getDocs(q);
+  
+      // Check if any documents were found
+      if (!querySnapshot.empty) {
+        // Get the first matching document
+        const quizDoc = querySnapshot.docs[0];
+        const quizData = quizDoc.data();
+  
+        // Set the values of the quiz being edited in the state variables
+        setquestion(quizData.quizQuestion);
+        setoption1(quizData.quizOption1);
+        setoption2(quizData.quizOption2);
+        setoption3(quizData.quizOption3);
+        setoption4(quizData.quizOption4);
+        setanswer(quizData.quizCorrectAns);
+        setEditingQuizId(quizData.id); // Set the editingQuizId to the id of the quiz being edited
+        setShow(true); // Open the modal for editing the quiz
+      } else {
+        console.log("Document does not exist");
+      }
+    } catch (error) {
+      console.log("Error getting documents:", error);
     }
   };
   
@@ -367,7 +408,7 @@ function DetailsQuiz(){
     <Container className="justify-content-center">
         <Row xs={1} md={3} className="g-4">
           {quizCards.map((quiz) => (
-            <Col key={quiz.quizID} className="d-flex justify-content-center">
+            <Col key={quiz.id} className="d-flex justify-content-center">
               <Card style={{ width: '18rem' }} >
                 <Card.Body>
                   <Card.Title>{quiz.quizQuestion}</Card.Title>

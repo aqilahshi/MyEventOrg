@@ -50,9 +50,9 @@ function NavbarPart(props) {
                 <Nav.Link href={`/playlivepoll?eventid=${eventId}&matricno=${participantMatricNo}`} className="border-bottom ">
                   <h5>Live Poll</h5>
                 </Nav.Link>
-                <Nav.Link href="/awardpage" className="border-bottom ">
+                {/* <Nav.Link href="/awardpage" className="border-bottom ">
                   <h5>Award Page </h5>
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link href={`/login?role=Participant&eventid=${eventId}`} className="border-bottom ">
                   <h5>Logout</h5>
                 </Nav.Link>
