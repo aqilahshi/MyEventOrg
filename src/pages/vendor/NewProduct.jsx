@@ -179,15 +179,18 @@ const handleSubmit = async (e) => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="productcategory">
                 <Form.Label>Product Category</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter product category"
+                
+                <Form.Select
                   onChange={(e) => setproductcategory(e.target.value)}
                   value={productcategory}
-                />
+                >
+                  <option value="">Select category</option>
+                  <option value="Stationery">Stationery</option>
+                  <option value="Specification">Keychain</option>
+                </Form.Select>
               </Form.Group>
             </Row>
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Form.Group as={Col} controlId="productcollection">
                 <Form.Label>Product Collection</Form.Label>
                 <Form.Control
@@ -197,18 +200,36 @@ const handleSubmit = async (e) => {
                   value={productcollection}
                 />
               </Form.Group>
-            </Row>
+            </Row> */}
             <Row className="mb-3">
               <Form.Group as={Col} controlId="productspecification">
                 <Form.Label>Product Specification</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter product specification"
+  
+
+                <Form.Select
                   onChange={(e) => setSpecification(e.target.value)}
                   value={productspecification}
+                >
+                  <option value="">Select attribute</option>
+                  <option value="Brand">Brand</option>
+                  <option value="Size">Material</option>
+                  <option value="Brand">Colour</option>
+                  <option value="Size">Size</option>
+                </Form.Select>
+              </Form.Group>
+            
+              <Form.Group as={Col} controlId="productquantity">
+                <Form.Label>Specification Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="E.g: small"
+                  onChange={(e) => setSpecification(e.target.value)}
+                  value={productquantity}
                 />
               </Form.Group>
             </Row>
+
+
             <Row className="mb-3">
               <Form.Group as={Col} controlId="productquantity">
                 <Form.Label>Product Quantity</Form.Label>

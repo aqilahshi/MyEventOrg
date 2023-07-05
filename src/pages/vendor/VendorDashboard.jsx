@@ -118,17 +118,17 @@ const VendorDashboard = () => {
   const topProducts = [
     {
       id: 1,
-      image: 'product1.jpg',
-      title: 'Product 1',
-      price: 10,
-      totalSold: 50,
+      image: 'https://firebasestorage.googleapis.com/v0/b/module-2-p1.appspot.com/o/productimg%2FF7IO8jpjgGa9WZxKQTIH%2FfAvhAT8JBImMQzzqkwsG%2Fhk1.jpg?alt=media&token=3784d85e-2486-4fdf-969a-cb43161d8f86',
+      title: 'Small Hand Towel (1 piece)',
+      price: 1.50,
+      totalSold: 5,
     },
     {
       id: 2,
-      image: 'product2.jpg',
-      title: 'Product 2',
-      price: 15,
-      totalSold: 45,
+      image: 'https://firebasestorage.googleapis.com/v0/b/module-2-p1.appspot.com/o/productimg%2FF7IO8jpjgGa9WZxKQTIH%2Fp6rlCCiViOG91FYBL6Xq%2Fft1.jpg?alt=media&token=d4e87342-64f1-4082-b6ad-472d709af291',
+      title: 'Face Towel 100% Cotton 35*75cm Hotel Grade Towel Water Absorption Soft Cotton Face Towel',
+      price: 4.50,
+      totalSold: 3,
     },
     // Add more products as needed
   ];
@@ -139,12 +139,12 @@ const VendorDashboard = () => {
     datasets: [
       {
         label: 'Lifetime Sales',
-        data: [2000, 500], // Replace with your actual data
+        data: [8, 0], // Replace with your actual data
         backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(192, 75, 75, 0.2)'], // Green and Red colors for completed and canceled orders respectively
         borderColor: ['rgba(75, 192, 192, 1)', 'rgba(192, 75, 75, 1)'],
         borderWidth: 1,
-        orders: 1887,
-        lifetimesales: 20456433.00,
+        orders: 8,
+        lifetimesales: 21.00,
       },
     ],
   };
@@ -188,7 +188,7 @@ const VendorDashboard = () => {
                       </Col>
                       <Col xs={9}>
                         <h6>{product.title}</h6>
-                        <p>Price: ${product.price}</p>
+                        <p>Price: RM{product.price}</p>
                         <p>Total Sold: {product.totalSold}</p>
                       </Col>
                     </Row>

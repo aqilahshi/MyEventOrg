@@ -14,7 +14,7 @@ const ExportDataToJson = () => {
         { name: 'Quiz', fileName: 'Quiz.json' },
         { name: 'EventDetails', fileName: 'EventDetails.json' },
         { name: 'LivePoll', fileName: 'LivePoll.json' }
-        { name: 'Todo', fileName: 'todo.json' },
+
         { name: 'CreateQuiz', fileName: 'CreateQuiz.json' },
         { name: 'User', fileName: 'Product.json' },
         { name: 'Todo', fileName: 'Quiz.json' },

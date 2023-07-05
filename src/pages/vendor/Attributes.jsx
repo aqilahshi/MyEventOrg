@@ -94,10 +94,10 @@ const Attributes = () => {
               />
             </th>
             <th>Attribute Name</th>
-            <th>Attribute Group</th>
-            <th>Type</th>
+            {/* <th>Attribute Group</th> */}
+            {/* <th>Type</th>
             <th>Is Required?</th>
-            <th>Is Filterable?</th>
+            <th>Is Filterable?</th> */}
           </tr>
         </thead>
         <tbody>
@@ -111,10 +111,10 @@ const Attributes = () => {
                 />
               </td>
               <td><Link to={`/editattribute/${Attribute.id}/${encodeURIComponent(Attribute.name)}`}>{Attribute.name}</Link></td>
-              <td>{Attribute.group}</td>
-              <td>{Attribute.type}</td>
+              {/* <td>{Attribute.group}</td> */}
+              {/* <td>{Attribute.type}</td>
               <td>{Attribute.required}</td>
-              <td>{Attribute.filterable}</td>
+              <td>{Attribute.filterable}</td> */}
             </tr>
           ))}
           <tr>

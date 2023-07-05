@@ -2,17 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, where } from 'firebase/firestore';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const sessionId = sessionStorage.getItem('sessionId');
+  const sessionUsername = sessionStorage.getItem('sessionUsername');
+ 
 
   useEffect(() => {
+    
+    
     const fetchProducts = async () => {
       try {
-        const q = query(collection(db, 'Product'));
+        const q = query(
+          collection(db, 'Product'),
+          where('vendorID', '==', sessionId)
+        );
         const querySnapshot = await getDocs(q);
         const fetchedProducts = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -23,9 +31,10 @@ const Products = () => {
         console.log('Error fetching products: ', error);
       }
     };
-
+  
     fetchProducts();
-  }, []);
+  }, [sessionId]);
+  
 
   const handleCheckboxChange = (event, product) => {
     const { checked } = event.target;
@@ -69,15 +78,16 @@ const Products = () => {
               />
             </th>
             {/* <th>Document ID</th> */}
+            <th>Product Image</th>
             <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Product Type</th>
+            {/* <th>Product Description</th> */}
+            {/* <th>Product Type</th> */}
             <th>Product Price</th>
             <th>Product Quantity</th>
-            <th>Stock</th>
-            <th>Availability</th>
+            {/* <th>Stock</th> */}
+            {/* <th>Availability</th> */}
             <th>Status</th>
-            <th>Visibility</th>
+            {/* <th>Visibility</th> */}
           </tr>
         </thead>
         <tbody>
@@ -91,15 +101,20 @@ const Products = () => {
                 />
               </td>
               {/* <td>{product.id}</td> */}
+              <td>
+                <img src={product.downloadURLs} alt="Product Image" style={{ width: '100px', height: '100px' }} />
+              </td>
+
+
               <td>{product.productname}</td>
-              <td>{product.productdesc}</td>
-              <td>{product.producttype}</td>
+              {/* <td>{product.productdesc}</td> */}
+              {/* <td>{product.producttype}</td> */}
               <td>{product.productprice}</td>
               <td>{product.productquantity}</td>
-              <td>{product.MStock}</td>
-              <td>{product.SAvailability}</td>
-              <td>{product.Status}</td>
-              <td>{product.Visibility}</td>
+              {/* <td>{product.MStock}</td> */}
+              {/* <td>{product.SAvailability}</td> */}
+              {/* <td>{product.Status}</td> */}
+              <td>{product.visibility}</td>
             </tr>
           ))}
         </tbody>

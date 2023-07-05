@@ -11,13 +11,13 @@ const firebaseConfig = {
   // storageBucket: "myeventorg-bbc9d.appspot.com",
   // messagingSenderId: "2134803470",
   // appId: "1:2134803470:web:92c22642db401cee68685f"
-  apiKey: "AIzaSyBgWo1iy-rgHou3dI3BdNaSd-j8mWVtZPI",
-  authDomain: "myeventorg-10681.firebaseapp.com",
-  projectId: "myeventorg-10681",
-  storageBucket: "myeventorg-10681.appspot.com",
-  messagingSenderId: "143151294569",
-  appId: "1:143151294569:web:020d9432e45a48487fdaf8",
-  measurementId: "G-W49Q74TTY4"
+  apiKey: "AIzaSyBHxfEOwnJV48-9cIAQ6wH8JiNDFHaELgA",
+  authDomain: "module-2-p1.firebaseapp.com",
+  projectId: "module-2-p1",
+  storageBucket: "module-2-p1.appspot.com",
+  messagingSenderId: "837724275142",
+  appId: "1:837724275142:web:2f5095412fb7b2e9e9b2c7",
+  measurementId: "G-HHJ2BXLTZZ"
 };
 
 // Initialize Firebase

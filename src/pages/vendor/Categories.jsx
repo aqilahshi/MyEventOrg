@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 const Categories = () => {
   // Sample data for available categories
   const [categories, setCategories] = useState([
-    { id: 1, name: 'category 1', status: true, selected: false, includeinmenu: false },
-    { id: 2, name: 'category 2', status: false, selected: false, includeinmenu: false },
-    { id: 3, name: 'category 3', status: true, selected: false, includeinmenu: false },
+    { id: 1, name: 'Stationery', status: true, selected: false, includeinmenu: true },
+    { id: 2, name: 'Food and beverage', status: false, selected: false, includeinmenu: true },
+    { id: 3, name: 'Keychain', status: true, selected: false, includeinmenu: true },
     // Add more category objects as needed
   ]);
 
@@ -93,7 +93,7 @@ const Categories = () => {
               />
             </th>
             <th>Category Name</th>
-            <th>Status</th>
+            {/* <th>Status</th> */}
             <th>Include In Menu</th>
           </tr>
         </thead>
@@ -117,7 +117,7 @@ const Categories = () => {
                   <div className="slider" />
                 </Button>
               </td>
-              <td>
+              {/* <td>
                 <Button
                   variant={category.includeinmenu ? 'success' : 'danger'}
                   onClick={() => handleIncludeInMenuToggle(category.id)}
@@ -125,7 +125,7 @@ const Categories = () => {
                 >
                   <div className="slider" />
                 </Button>
-              </td>
+              </td> */}
             </tr>
           ))}
           <tr>

@@ -35,12 +35,12 @@ const AdminSidebar = ({ children }) => {
         { label: 'Manage Vendor', link: '/managevendor', icon: <FaPaperclip /> },
       ]
     },
-    {
-      category: '',
-      items: [
-        { label: 'Setting', link: '/adminsetting', icon: <FaUsers /> }
-      ]
-    }
+    // {
+    //   category: '',
+    //   items: [
+    //     { label: 'Setting', link: '/adminsetting', icon: <FaUsers /> }
+    //   ]
+    // }
     // Add more categories and menu items as needed
   ];
 

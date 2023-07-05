@@ -32,7 +32,7 @@ const EditAttribute = () => {
   return (
     <div className='vendorpage'>
       <h1>Editing {name}</h1>
-      <p>ID: {id}</p>
+      {/* <p>ID: {id}</p> */}
 
       <Form >
         <Container>
@@ -61,8 +61,8 @@ const EditAttribute = () => {
                         />
                     </Form.Group>
 
-                    <Form.Label>Type</Form.Label>
-                    <Form.Group as={Col}>
+                    {/* <Form.Label>Type</Form.Label> */}
+                    {/* <Form.Group as={Col}>
                         <Form.Check
                         type="radio"
                         label="Text"
@@ -95,25 +95,25 @@ const EditAttribute = () => {
                         checked={Type === 'Textarea'}
                         onChange={handleTypeChange}
                         />
-                        {/* Add more radio options as needed */}
-                    </Form.Group>
+                       
+                    </Form.Group> */}
 
                     </div>
                 </Row>
 
                 {/* <br/> */}
 
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                         <h6>ATTRIBUTE GROUP</h6>
                         <p>Select groups the attribute belongs to hgxgxgx</p>
                     </div>
-                </Row>
+                </Row> */}
                 </Col>
 
-                <Col>
+                {/* <Col> */}
                 
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                     <h6>Setting</h6>
                     <p>Is Required?</p>
@@ -134,12 +134,12 @@ const EditAttribute = () => {
                         checked={required === 'Required'}
                         onChange={handlerequiredChange}
                         />
-                        {/* Add more radio options as needed */}
+                       
                     </Form.Group>
                     </div>
-                </Row>
+                </Row> */}
 
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                     <p>Is Filterable?</p>
                     <Form.Group as={Col}>
@@ -158,13 +158,13 @@ const EditAttribute = () => {
                         value="Yes"
                         checked={filterable === 'Yes'}
                         onChange={handlefilterableChange}
-                        />
+                        /> */}
                         {/* Add more radio options as needed */}
-                    </Form.Group>
+                    {/* </Form.Group>
                     </div>
-                </Row>
+                </Row> */}
 
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                     <p>Show to customers?</p>
                     <Form.Group as={Col}>
@@ -183,12 +183,12 @@ const EditAttribute = () => {
                         value="Yes"
                         checked={show === 'Yes'}
                         onChange={handleshowChange}
-                        />
+                        /> */}
                         {/* Add more radio options as needed */}
-                    </Form.Group>
+                    {/* </Form.Group>
                     </div>
-                </Row>
-                </Col>
+                </Row> */}
+                {/* </Col> */}
           </Row>
         </Container>
       </Form>

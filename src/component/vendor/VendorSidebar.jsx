@@ -28,22 +28,22 @@ const VendorSidebar = ({ children }) => {
       items: [
         { label: 'Products', link: '/listproducts', icon: <FaBoxOpen /> },
         { label: 'Categories', link: '/categories', icon: <FaPaperclip /> },
-        { label: 'Collections', link: '/collections', icon: <FaTag /> },
+        // { label: 'Collections', link: '/collections', icon: <FaTag /> },
         { label: 'Specification', link: '/attributes', icon: <FaHashtag /> }
       ]
     },
-    {
-      category: 'SALE',
-      items: [
-        { label: 'Orders', link: '/orders', icon: <FaBox /> }
-      ]
-    },
-    {
-      category: 'CUSTOMER',
-      items: [
-        { label: 'Customers', link: '/customers', icon: <FaUsers /> }
-      ]
-    }
+    // {
+    //   category: 'SALE',
+    //   items: [
+    //     { label: 'Orders', link: '/orders', icon: <FaBox /> }
+    //   ]
+    // },
+    // {
+    //   category: 'CUSTOMER',
+    //   items: [
+    //     { label: 'Customers', link: '/customers', icon: <FaUsers /> }
+    //   ]
+    // }
     // Add more categories and menu items as needed
   ];
 

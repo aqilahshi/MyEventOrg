@@ -36,7 +36,7 @@ const NewCategory = () => {
                     <div className="custom-div">
                         <h6>General</h6>
                         <Form.Group as={Col} controlId="productname">
-                        <Form.Label>Product Name</Form.Label>
+                        <Form.Label>Category Name</Form.Label>
                         <Form.Control
                         type="text"
                         //   placeholder="Enter product name"
@@ -45,21 +45,19 @@ const NewCategory = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="productname">
+                    {/* <Form.Group as={Col} controlId="productname">
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                         type="text"
-                        //   placeholder="Enter description "
-                        //   onChange={(e) => setProductName(e.target.value)}
-                        //   value={productname}
+
                         />
-                    </Form.Group>
+                    </Form.Group> */}
                     </div>
                 </Row>
 
                 <br/>
 
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                         <h6>Search engine optimize</h6>
                         <Form.Group as={Col} controlId="productname">
@@ -102,11 +100,11 @@ const NewCategory = () => {
                         />
                         </Form.Group>
                     </div>
-                </Row>
+                </Row> */}
                 </Col>
 
                 <Col>
-                <Row className="d-flex justify-content-center">
+                {/* <Row className="d-flex justify-content-center">
                     <div className="custom-div">
                     <h6>Category banner</h6>
                     <Dropzone onDrop={handleImageDrop}>
@@ -150,10 +148,10 @@ const NewCategory = () => {
                         checked={status === 'Enabled'}
                         onChange={handleStatusChange}
                         />
-                        {/* Add more radio options as needed */}
+                     
                     </Form.Group>
                     </div>
-                </Row>
+                </Row> */}
 
                 <Row className="d-flex justify-content-center">
                     <div className="custom-div">
